@@ -46,7 +46,7 @@
                     <a-breadcrumb-item>Bill</a-breadcrumb-item>
                 </a-breadcrumb>
                 <div :style="{ padding: '24px', background: '#fff', minHeight: '360px' }">
-                    teacher
+                    <router-view />
                 </div>
             </a-layout-content>
             <a-layout-footer style="text-align: center">

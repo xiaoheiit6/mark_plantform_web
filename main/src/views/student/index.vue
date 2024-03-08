@@ -12,7 +12,7 @@
                 </a-menu-item>
 
                 <a-menu-item key="2">
-                    <DownloadOutlined />
+                    <UserOutlined />
                     <span>Option 2</span>
                 </a-menu-item>
 
@@ -65,7 +65,7 @@
 
 <script setup>
     import { ref } from 'vue';
-    import { PieChartOutlined,DownloadOutlined } from '@ant-design/icons-vue';
+    import { PieChartOutlined,DownloadOutlined,UserOutlined } from '@ant-design/icons-vue';
     const collapsed = ref(false);
     const selectedKeys = ref(['1']);
 </script>
