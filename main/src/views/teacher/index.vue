@@ -4,11 +4,11 @@
             <div class="logo" />
             <a-menu v-model:selectedKeys="selectedKeys" theme="dark" mode="inline">
                 <a-menu-item key="1">
-                    <pie-chart-outlined />
-                    <span>Option 1</span>
+                    <PieChartOutlined />
+                    <span>历史数据</span>
                 </a-menu-item>
                 <a-menu-item key="2">
-                    <desktop-outlined />
+                    <CommentOutlined />
                     <span>Option 2</span>
                 </a-menu-item>
                 <a-sub-menu key="sub1">
@@ -25,7 +25,7 @@
                 <a-sub-menu key="sub2">
                     <template #title>
                         <span>
-                            <team-outlined />
+                            <TeamOutlined />
                             <span>Team</span>
                         </span>
                     </template>
@@ -33,7 +33,7 @@
                     <a-menu-item key="8">Team 2</a-menu-item>
                 </a-sub-menu>
                 <a-menu-item key="9">
-                    <file-outlined />
+                    <CloudUploadOutlined />
                     <span>File</span>
                 </a-menu-item>
             </a-menu>
@@ -56,9 +56,10 @@
     </a-layout>
 </template>
 <script setup>
-import { ref } from 'vue';
-const collapsed = ref(false);
-const selectedKeys = ref(['1']);
+    import { ref } from 'vue';
+    import { PieChartOutlined,TeamOutlined, DownloadOutlined,CommentOutlined, UserOutlined, CloudUploadOutlined } from '@ant-design/icons-vue';
+    const collapsed = ref(false);
+    const selectedKeys = ref(['1']);
 </script>
 <style scoped>
 #components-layout-demo-side .logo {
@@ -75,5 +76,3 @@ const selectedKeys = ref(['1']);
     background: #141414;
 }
 </style>
-
-<style scoped></style>
