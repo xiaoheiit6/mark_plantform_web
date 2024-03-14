@@ -2,12 +2,19 @@ import { reactive, ref } from "vue";
 import { defineStore } from "pinia";
 
 export const useWebStore = defineStore('web', () => {
-    const web = reactive({
-        title: 'aa',
-        count: 10
+    const info = reactive({
+        isLogin: false,
+        token: "",
+        userName: "",
     })
+
+
     return {
-        web,
+        info
     }
-})
+},
+    {
+        //持久化存储到 localStorage 中
+        persist: true
+    })
 

@@ -11,3 +11,5 @@ Marking_plantform's web ui
    [Doc](https://router.vuejs.org/zh/introduction.html)
 4. Ant Design Vue
    [Doc](https://next.antdv.com/components/overview-cn)
+5. pinia-plugin-persistedstate
+   [Doc](https://prazdevs.github.io/pinia-plugin-persistedstate/zh/)
