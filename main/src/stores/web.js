@@ -16,5 +16,6 @@ export const useWebStore = defineStore('web', () => {
     {
         //持久化存储到 localStorage 中
         persist: true
-    })
+    }
+)
 

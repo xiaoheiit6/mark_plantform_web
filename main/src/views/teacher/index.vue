@@ -4,10 +4,12 @@
             <div class="logo" />
             <a-menu v-model:selectedKeys="selectedKeys" theme="dark" mode="inline">
                 <a-menu-item key="1">
+                    <router-link to="/teacher/data" />
                     <PieChartOutlined />
                     <span>历史数据</span>
                 </a-menu-item>
                 <a-menu-item key="2">
+                    <router-link to="/teacher/success" />
                     <CommentOutlined />
                     <span>Option 2</span>
                 </a-menu-item>
@@ -39,13 +41,17 @@
             </a-menu>
         </a-layout-sider>
         <a-layout>
-            <a-layout-header style="background: #fff; padding: 0" />
+            <a-layout-header style="background: #fff; padding: 0" >
+                <a-flex :style="{ ...boxStyle }" justify="flex-end" align="center" gap="large">
+                <a-button type="primary" >Primary Button</a-button>
+                <a-button type="primary" >Primary Button</a-button>
+                </a-flex>
+            </a-layout-header>
             <a-layout-content style="margin: 0 16px">
                 <a-breadcrumb style="margin: 16px 0">
-                    <a-breadcrumb-item>User</a-breadcrumb-item>
-                    <a-breadcrumb-item>Bill</a-breadcrumb-item>
+                    
                 </a-breadcrumb>
-                <div :style="{ padding: '24px', background: '#fff', minHeight: '360px' }">
+                <div :style="{ padding: '24px', background: '#fff', minHeight: '100%' }">
                     <router-view />
                 </div>
             </a-layout-content>
@@ -57,9 +63,15 @@
 </template>
 <script setup>
     import { ref } from 'vue';
-    import { PieChartOutlined,TeamOutlined, DownloadOutlined,CommentOutlined, UserOutlined, CloudUploadOutlined } from '@ant-design/icons-vue';
+    import { PieChartOutlined,TeamOutlined,CommentOutlined, UserOutlined, CloudUploadOutlined } from '@ant-design/icons-vue';
     const collapsed = ref(false);
     const selectedKeys = ref(['1']);
+    const boxStyle = {
+  width: '95%',
+  height: '64px',
+  borderRadius: '6px',
+  border: '1px solid #40a9ff',
+};
 </script>
 <style scoped>
 #components-layout-demo-side .logo {
@@ -75,4 +87,10 @@
 [data-theme='dark'] .site-layout .site-layout-background {
     background: #141414;
 }
+.logo{
+    height: 50px;
+    width: 100%;
+    
+}
+
 </style>

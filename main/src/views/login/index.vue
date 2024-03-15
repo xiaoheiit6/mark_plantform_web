@@ -4,7 +4,7 @@
       <a-flex :style="{ ...boxStyle }" :justify="justify" :align="alignItems">
         <a-form :model="formState" name="normal_login" class="login-form" @finish="onFinish"
           @finishFailed="onFinishFailed">
-          <a-form-item label="Username" name="username"
+          <a-form-item label="账号" name="username"
             :rules="[{ required: true, message: 'Please input your username!' }]">
             <a-input v-model:value="formState.username">
               <template #prefix>
@@ -13,7 +13,7 @@
             </a-input>
           </a-form-item>
 
-          <a-form-item label="Password" name="password"
+          <a-form-item label="密码" name="password"
             :rules="[{ required: true, message: 'Please input your password!' }]">
             <a-input-password v-model:value="formState.password">
               <template #prefix>
@@ -24,17 +24,17 @@
 
           <a-form-item>
             <a-form-item name="remember" no-style>
-              <a-checkbox v-model:checked="formState.remember">Remember me</a-checkbox>
+              <a-checkbox v-model:checked="formState.remember">记住我</a-checkbox>
             </a-form-item>
-            <a class="login-form-forgot" href="">Forgot password</a>
+            <a class="login-form-forgot" href="">忘记密码</a>
           </a-form-item>
 
           <a-form-item>
             <a-button :disabled="disabled" type="primary" html-type="submit" class="login-form-button">
-              Log in
+             登录
             </a-button>
-            Or
-            <a href="">register now!</a>
+            或者
+            <a href="">现在注册!</a>
           </a-form-item>
         </a-form>
       </a-flex>
@@ -66,7 +66,7 @@ const boxStyle = {
   width: '100%',
   height: '400px',
   borderRadius: '6px',
-  border: '1px solid #40a9ff',
+
 };
 </script>
 

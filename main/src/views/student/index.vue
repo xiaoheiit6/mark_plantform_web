@@ -1,7 +1,4 @@
 <template>
-    <head>
-        <title>ss</title>
-    </head>
     <a-layout style="min-height: 100vh">
         <a-layout-sider v-model:collapsed="collapsed" collapsible>
             <div class="logo" />
@@ -56,9 +53,11 @@
                     student
                 </div>
             </a-layout-content>
+
             <a-layout-footer style="text-align: center">
                 Ant Design ©2018 Created by Ant UED
             </a-layout-footer>
+            
         </a-layout>
     </a-layout>
 </template>
