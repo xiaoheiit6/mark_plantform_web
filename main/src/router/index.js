@@ -43,6 +43,11 @@ const routes = [
         meta: { requiresAuth: true },
         component: () => import('@/views/test/test.vue')
     },
+    {
+      path: '/echarts',
+      component: () => import('@/views/test/echarts.vue')
+
+    },
 ]
 
 const router = createRouter({

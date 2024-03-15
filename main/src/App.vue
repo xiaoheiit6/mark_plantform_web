@@ -1,9 +1,7 @@
 <template>
 
   <router-view />
-  {{ webStore.info.isLogin }}
-  <button @click="test">更改</button>
-
+  
 </template>
 
 <script setup>
