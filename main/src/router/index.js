@@ -48,10 +48,6 @@ const routes = [
   },
 
   {
-    path: '/personal',
-    component: () => import('@/views/personal/personal_info.vue')
-  },
-  {
     path: '/test',
     name: 'test',
     meta: { requiresAuth: true },
