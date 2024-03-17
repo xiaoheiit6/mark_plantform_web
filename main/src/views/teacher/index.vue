@@ -11,7 +11,7 @@
                 <a-menu-item key="2">
                     <router-link to="/teacher/success" />
                     <CommentOutlined />
-                    <span>Option 2</span>
+                    <span>成功页面</span>
                 </a-menu-item>
                 <a-sub-menu key="sub1">
                     <template #title>

@@ -1,5 +1,6 @@
 <script setup>
-
+import { useWebStore } from '@/stores/web.js';
+const webStore = useWebStore()
 </script>
 
 <template>

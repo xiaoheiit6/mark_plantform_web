@@ -4,13 +4,15 @@
             <div class="logo" />
             <a-menu v-model:selectedKeys="selectedKeys" theme="dark" mode="inline">
                 <a-menu-item key="1">
+                    <router-link to="/student/data" />
                     <PieChartOutlined />
                     <span>分析</span>
                 </a-menu-item>
 
                 <a-menu-item key="2">
+                    <router-link to="/student/upload" />
                     <UserOutlined />
-                    <span>Option 2</span>
+                    <span>上传页面</span>
                 </a-menu-item>
 
                 <a-sub-menu key="sub1">
@@ -46,27 +48,28 @@
             <a-layout-header style="background: #fff; padding: 0" />
             <a-layout-content style="margin: 0 16px">
                 <a-breadcrumb style="margin: 16px 0">
-                    <a-breadcrumb-item>User</a-breadcrumb-item>
-                    <a-breadcrumb-item>Bill</a-breadcrumb-item>
+                    
                 </a-breadcrumb>
                 <div :style="{ padding: '24px', background: '#fff', minHeight: '360px' }">
-                    student
+                    <router-view />
                 </div>
             </a-layout-content>
 
             <a-layout-footer style="text-align: center">
                 Ant Design ©2018 Created by Ant UED
             </a-layout-footer>
-            
+
         </a-layout>
     </a-layout>
 </template>
 
 <script setup>
-    import { ref } from 'vue';
-    import { PieChartOutlined,DownloadOutlined,UserOutlined } from '@ant-design/icons-vue';
-    const collapsed = ref(false);
-    const selectedKeys = ref(['1']);
+import { useWebStore } from '@/stores/web.js';
+const webStore = useWebStore()
+import { ref } from 'vue';
+import { PieChartOutlined, DownloadOutlined, UserOutlined } from '@ant-design/icons-vue';
+const collapsed = ref(false);
+const selectedKeys = ref(['1']);
 </script>
 
 

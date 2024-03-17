@@ -8,7 +8,7 @@ const routes = [
   {
     path: '/login',
     component: () => import('@/views/login/index.vue'),
-    meta: {title:'登录'}
+    meta: { title: '登录' }
   },
   {
     path: '/register',
@@ -18,6 +18,10 @@ const routes = [
     path: '/teacher',
     component: () => import('@/views/teacher/index.vue'),
     children: [
+      {
+        path: 'info',
+        component: import('@/views/teacher/info.vue')
+      },
       {
         path: 'data',
         component: import('@/views/teacher/data.vue')
@@ -30,7 +34,17 @@ const routes = [
   },
   {
     path: '/student',
-    component: () => import('@/views/student/index.vue')
+    component: () => import('@/views/student/index.vue'),
+    children: [
+      {
+        path: 'data',
+        component: import('@/views/student/data.vue')
+      },
+      {
+        path: 'upload',
+        component: import('@/views/student/upload.vue')
+      }
+    ]
   },
 
   {
@@ -59,6 +73,7 @@ const router = createRouter({
 router.beforeEach((to, from, next) => {
   //设置每个页面的title
   document.title = to.meta.title || '智能阅卷平台'
+
   // 检查即将进入的路由是否需要认证
   if (to.matched.some(record => record.meta.requiresAuth)) {
     // 检查用户是否已登录
