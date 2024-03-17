@@ -84,6 +84,10 @@ const boxStyle = {
   /* 垂直居中 */
   height: 100vh;
   /* 使容器的高度等于视口的高度 */
+
+  background-image: url('@/assets/background.jpg'); /* 设置背景图片 */
+  background-size: cover; /* 背景图片覆盖整个容器 */
+  background-position: center; /* 背景图片居中显示 */
 }
 
 .login-form {
