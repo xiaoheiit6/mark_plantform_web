@@ -58,7 +58,7 @@ const option2 = computed(() => {
         },
         series: [
             {
-                name: 'Access From',
+                name: '来自：',
                 type: 'pie',
                 radius: '50%',
                 data: [

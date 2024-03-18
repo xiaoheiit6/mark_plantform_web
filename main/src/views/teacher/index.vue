@@ -41,15 +41,25 @@
             </a-menu>
         </a-layout-sider>
         <a-layout>
-            <a-layout-header style="background: #fff; padding: 0" >
+            <a-layout-header style="background: #fff; padding: 0">
                 <a-flex :style="{ ...boxStyle }" justify="flex-end" align="center" gap="large">
-                <a-button type="primary" >Primary Button</a-button>
-                <a-button type="primary" >Primary Button</a-button>
+                    <a-button type="primary">Primary Button</a-button>
+                    <a-popover placement="bottom">
+                        <template #content>
+                            <a-button type="primary">退出</a-button>
+                            
+                        </template>
+                        <a-avatar :size="50">
+                            <template #icon>
+                                <UserOutlined />
+                            </template>
+                        </a-avatar>
+                    </a-popover>
                 </a-flex>
             </a-layout-header>
             <a-layout-content style="margin: 0 16px">
                 <a-breadcrumb style="margin: 16px 0">
-                    
+
                 </a-breadcrumb>
                 <div :style="{ padding: '24px', background: '#fff', minHeight: '100%' }">
                     <router-view />
@@ -62,15 +72,15 @@
     </a-layout>
 </template>
 <script setup>
-    import { ref } from 'vue';
-    import { PieChartOutlined,TeamOutlined,CommentOutlined, UserOutlined, CloudUploadOutlined } from '@ant-design/icons-vue';
-    const collapsed = ref(false);
-    const selectedKeys = ref(['1']);
-    const boxStyle = {
-  width: '95%',
-  height: '64px',
-  borderRadius: '6px',
-  border: '1px solid #40a9ff',
+import { ref } from 'vue';
+import { PieChartOutlined, TeamOutlined, CommentOutlined, UserOutlined, CloudUploadOutlined } from '@ant-design/icons-vue';
+const collapsed = ref(false);
+const selectedKeys = ref(['1']);
+const boxStyle = {
+    width: '95%',
+    height: '64px',
+    borderRadius: '6px',
+    border: '1px solid #40a9ff',
 };
 </script>
 <style scoped>
@@ -87,10 +97,10 @@
 [data-theme='dark'] .site-layout .site-layout-background {
     background: #141414;
 }
-.logo{
+
+.logo {
     height: 50px;
     width: 100%;
-    
-}
 
+}
 </style>

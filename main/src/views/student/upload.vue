@@ -1,8 +1,8 @@
 <template>
   <a-upload-dragger v-model:fileList="fileList" name="file" :multiple="true"
     action="https://www.mocky.io/v2/5cc8019d300000980a055e76" @change="handleChange" @drop="handleDrop">
-    <p class="ant-upload-drag-icon">
-      <inbox-outlined></inbox-outlined>
+    <p class="uploadbox">
+      <UploadOutlined />
     </p>
     <p class="ant-upload-text">点击或者拖拽文件到此处上传</p>
     <p class="ant-upload-hint">
@@ -10,9 +10,11 @@
     </p>
   </a-upload-dragger>
 </template>
+
 <script setup>
 import { ref } from 'vue';
 import { message } from 'ant-design-vue';
+import { UploadOutlined, } from '@ant-design/icons-vue';
 const fileList = ref([]);
 const handleChange = info => {
   const status = info.file.status;
@@ -29,3 +31,10 @@ function handleDrop(e) {
   console.log(e);
 }
 </script>
+
+
+<style scoped>
+.uploadbox{
+  transform: scale(2);
+}
+</style>
