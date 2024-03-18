@@ -99,10 +99,9 @@ router.beforeEach((to, from, next) => {
 function isLoggedIn() {
   // 实现检查登录状态的逻辑
   // return localStorage.getItem('userLoggedIn') === 'true';
-  //console.log(typeof(useWebStore().info.isLogin))
-  // const is = useWebStore().info.isLogin()
-  // return is
-  return useWebStore().info.isLogin
+  
+  //return useWebStore().info.isLogin
+  return true
  
 }
 
