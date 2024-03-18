@@ -44,17 +44,33 @@
             <a-layout-header style="background: #fff; padding: 0">
                 <a-flex :style="{ ...boxStyle }" justify="flex-end" align="center" gap="large">
                     <a-button type="primary">Primary Button</a-button>
-                    <a-popover placement="bottom">
-                        <template #content>
-                            <a-button type="primary">退出</a-button>
-                            
+                    
+                    <a-dropdown>
+                        <template #overlay>
+                            <a-menu @click="handleMenuClick">
+                                <a-menu-item key="1">
+                                    <UserOutlined />
+                                    
+                                </a-menu-item>
+                                <a-menu-item key="2">
+                                    <UserOutlined />
+                                    2nd 
+                                </a-menu-item>
+                                <a-menu-item key="3">
+                                    <UserOutlined />
+                                    3rd item
+                                </a-menu-item>
+                            </a-menu>
                         </template>
-                        <a-avatar :size="50">
+                        <a-avatar :size="small">
                             <template #icon>
                                 <UserOutlined />
+                                
                             </template>
                         </a-avatar>
-                    </a-popover>
+                        
+                    </a-dropdown>
+                    <span>username</span>
                 </a-flex>
             </a-layout-header>
             <a-layout-content style="margin: 0 16px">
@@ -80,7 +96,7 @@ const boxStyle = {
     width: '95%',
     height: '64px',
     borderRadius: '6px',
-    border: '1px solid #40a9ff',
+    // border: '1px solid #40a9ff',
 };
 </script>
 <style scoped>

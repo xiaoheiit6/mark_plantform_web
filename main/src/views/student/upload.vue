@@ -34,7 +34,7 @@ function handleDrop(e) {
 
 
 <style scoped>
-.uploadbox{
+/* .uploadbox{
   transform: scale(2);
-}
+} */
 </style>

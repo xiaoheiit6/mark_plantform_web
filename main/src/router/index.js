@@ -1,4 +1,5 @@
 import { createRouter, createWebHistory } from "vue-router";
+import { useWebStore } from "@/stores/web";
 
 const routes = [
   {
@@ -17,6 +18,7 @@ const routes = [
   {
     path: '/teacher',
     component: () => import('@/views/teacher/index.vue'),
+    meta: { requiresAuth: true },
     children: [
       {
         path: 'info',
@@ -35,7 +37,12 @@ const routes = [
   {
     path: '/student',
     component: () => import('@/views/student/index.vue'),
+    meta: { requiresAuth: true },
     children: [
+      {
+        path: 'info',
+        component: import('@/views/student/info.vue')
+      },
       {
         path: 'data',
         component: import('@/views/student/data.vue')
@@ -56,7 +63,6 @@ const routes = [
   {
     path: '/echarts',
     component: () => import('@/views/test/echarts.vue')
-
   },
 ]
 
@@ -93,7 +99,11 @@ router.beforeEach((to, from, next) => {
 function isLoggedIn() {
   // 实现检查登录状态的逻辑
   // return localStorage.getItem('userLoggedIn') === 'true';
-  return true;
+  //console.log(typeof(useWebStore().info.isLogin))
+  // const is = useWebStore().info.isLogin()
+  // return is
+  return useWebStore().info.isLogin
+ 
 }
 
 
