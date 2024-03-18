@@ -7,6 +7,10 @@ const routes = [
     component: () => import('@/App.vue')
   },
   {
+    path: '/route',
+    component: () => import('@/views/test/route.vue')
+  },
+  {
     path: '/login',
     component: () => import('@/views/login/index.vue'),
     meta: { title: '登录' }
