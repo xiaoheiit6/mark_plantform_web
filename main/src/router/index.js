@@ -35,6 +35,10 @@ const routes = [
       {
         path: 'success',
         component: import('@/views/teacher/success.vue')
+      },
+      {
+        path: 'table',
+        component: import('@/views/test/table.vue')
       }
     ]
   },
@@ -68,6 +72,10 @@ const routes = [
     path: '/echarts',
     component: () => import('@/views/test/echarts.vue')
   },
+  {
+    path: '/table',
+    component: () => import('@/views/test/table.vue')
+  }
 ]
 
 const router = createRouter({
