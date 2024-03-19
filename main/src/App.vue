@@ -8,7 +8,6 @@
 import { useWebStore } from '@/stores/web.js';
 const webStore = useWebStore()
 
-
 const test = () => {
   webStore.info.isLogin = true;
 }

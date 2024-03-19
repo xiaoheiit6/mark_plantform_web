@@ -27,6 +27,8 @@
 
 </template>
 <script setup>
+import { useWebStore } from '@/stores/web.js';
+const webStore = useWebStore()
 import { reactive, ref } from 'vue';
 const justifyOptions = reactive([
   'flex-start',

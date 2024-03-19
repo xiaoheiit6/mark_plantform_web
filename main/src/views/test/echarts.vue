@@ -10,6 +10,9 @@ import { GridComponent } from 'echarts/components'
 import { CanvasRenderer } from 'echarts/renderers'
 import VChart, { THEME_KEY } from "vue-echarts";
 
+import { useWebStore } from '@/stores/web.js';
+const webStore = useWebStore()
+
 use([GridComponent, LineChart, CanvasRenderer])
 
 

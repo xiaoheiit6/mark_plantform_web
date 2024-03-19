@@ -90,6 +90,8 @@
 <script setup>
 import { ref } from 'vue';
 import { PieChartOutlined, TeamOutlined, CommentOutlined, UserOutlined, CloudUploadOutlined } from '@ant-design/icons-vue';
+import { useWebStore } from '@/stores/web.js';
+const webStore = useWebStore()
 const collapsed = ref(false);
 const selectedKeys = ref(['1']);
 const boxStyle = {

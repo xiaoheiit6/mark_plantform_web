@@ -15,6 +15,8 @@
 import { ref } from 'vue';
 import { message } from 'ant-design-vue';
 import { UploadOutlined, } from '@ant-design/icons-vue';
+import { useWebStore } from '@/stores/web.js';
+const webStore = useWebStore()
 const fileList = ref([]);
 const handleChange = info => {
   const status = info.file.status;
