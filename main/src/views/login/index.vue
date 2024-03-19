@@ -21,22 +21,23 @@
             </a-input-password>
           </a-form-item>
 
-          <a-form-item>
-            <a-form-item name="remember" no-style>
-              <a-checkbox v-model:checked="formState.remember">记住我</a-checkbox>
-            </a-form-item>
-            <a class="login-form-forgot" href="">忘记密码</a>
-          </a-form-item>
-          <a-radio-group v-model:value="value" name="radioGroup">
+
+          <a-radio-group v-model:value="value" name="radioGroup" class="space-around">
             <a-radio value="1">学生</a-radio>
             <a-radio value="2">老师</a-radio>
           </a-radio-group>
-          <a-form-item>
+          <a-form-item class="center">
             <a-button :disabled="disabled" type="primary" html-type="submit" class="login-form-button" @click="login">
               登录
             </a-button>
             或者
             <a href="/register">现在注册!</a>
+          </a-form-item>
+          <a-form-item class="margin">
+            <a-form-item name="remember" no-style>
+              <a-checkbox v-model:checked="formState.remember">记住我</a-checkbox>
+            </a-form-item>
+            <a class="login-form-forgot" href="">忘记密码</a>
           </a-form-item>
         </a-form>
       </div>
@@ -87,12 +88,7 @@ const login = () => {
 
 }
 
-
-
-
 </script>
-
-
 
 
 <style scoped>
@@ -132,11 +128,35 @@ const login = () => {
   border-radius: 6px;
   /* 如果需要，可以添加边框圆角 */
   padding: 3%;
-  /* 根据需要调整内边距 */
+  /* 根据需要调整内边距  */
 }
 
 /* 如果需要，也可以添加一个轻微的阴影效果来增强层次感 */
 .loginbox {
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
+
+/* button的水平居中 */
+.space-around{
+display: flex;
+justify-content: space-around;
+}
+
+/* 登录的居中 */
+.center{
+  margin-top: 10px;
+  display: flex;
+  justify-content: center;
+}
+
+/* 登录按键字体的大小 */
+.login-form-button{
+  font-size: 18px;
+}
+
+/* form表单里div的下边距 */
+.ant-form-item {
+    margin-bottom: 10px;
+}
+
 </style>
