@@ -17,10 +17,13 @@
                     <template #title>
                         <span>
                             <user-outlined />
-                            <span>User</span>
+                            <span>试卷</span>
                         </span>
                     </template>
-                    <a-menu-item key="3">Tom</a-menu-item>
+                    <a-menu-item key="3">
+                        <span>试卷管理</span>
+                        <router-link to="/teacher/table" />
+                    </a-menu-item>
                     <a-menu-item key="4">Bill</a-menu-item>
                     <a-menu-item key="5">Alex</a-menu-item>
                 </a-sub-menu>
@@ -28,10 +31,13 @@
                     <template #title>
                         <span>
                             <TeamOutlined />
-                            <span>Team</span>
+                            <span>学生</span>
                         </span>
                     </template>
-                    <a-menu-item key="6">Team 1</a-menu-item>
+                    <a-menu-item key="6">
+                        <span>学生管理</span>
+                        <router-link to="/teacher/table" />
+                    </a-menu-item>
                     <a-menu-item key="8">Team 2</a-menu-item>
                 </a-sub-menu>
                 <a-menu-item key="9">

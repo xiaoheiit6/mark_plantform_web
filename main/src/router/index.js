@@ -75,6 +75,10 @@ const routes = [
   {
     path: '/table',
     component: () => import('@/views/test/table.vue')
+  },
+  {
+    path: '/img',
+    component: () => import('@/views/test/img.vue')
   }
 ]
 

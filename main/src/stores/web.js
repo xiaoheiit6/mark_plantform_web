@@ -6,6 +6,7 @@ export const useWebStore = defineStore('web', () => {
         isLogin: false,
         token: "",
         userName: "",
+        id: -1
     })
 
 
