@@ -25,8 +25,6 @@
             </template>
             <template v-else-if="column.key === 'action'">
                 <span>
-                    
-                    
                     <a>Delete</a>
                     <a-divider type="vertical" />
                     <a class="ant-dropdown-link">
@@ -34,6 +32,9 @@
                         <down-outlined />
                     </a>
                 </span>
+            </template>
+            <template v-else-if="column.key === 'age'">
+                <a-image :width="100" src="https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png" />
             </template>
         </template>
     </a-table>
@@ -69,7 +70,7 @@ const data = [
     {
         key: '1',
         name: 'John Brown',
-        age: 32,
+        age: '<a-image :width="100" src="https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png" />',
         address: 'New York No. 1 Lake Park',
         tags: ['nice', 'developer'],
     },

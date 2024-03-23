@@ -5,6 +5,7 @@
       <div class="loginbox">
         <a-form :model="formState" name="normal_login" class="login-form" @finish="onFinish"
           @finishFailed="onFinishFailed">
+          <h1 class="title-center">山水诗画</h1>
           <a-form-item label="账号" name="username" :rules="[{ required: true, message: 'Please input your username!' }]">
             <a-input v-model:value="formState.username">
               <template #prefix>
@@ -38,6 +39,7 @@
               <a-checkbox v-model:checked="formState.remember">记住我</a-checkbox>
             </a-form-item>
             <a class="login-form-forgot" href="">忘记密码</a>
+            <!-- <a-button @click="success">Success</a-button> -->
           </a-form-item>
         </a-form>
       </div>
@@ -48,6 +50,7 @@
 
 <script setup>
 import axios from 'axios';
+import { message } from 'ant-design-vue';
 import { useWebStore } from '@/stores/web.js';
 const webStore = useWebStore()
 
@@ -60,6 +63,12 @@ const formState = reactive({
   password: '',
   remember: true,
 });
+const success = () => {
+  message.success({
+    content: '登录成功',
+    duration: 1
+  });
+};
 const onFinish = values => {
   console.log('Success:', values);
 };
@@ -94,6 +103,9 @@ const login = () => {
 
 
 <style scoped>
+.title-center {
+  text-align: center;
+}
 .container-center {
   display: flex;
   justify-content: center;
@@ -102,8 +114,7 @@ const login = () => {
   /* 垂直居中 */
   height: 100vh;
   /* 使容器的高度等于视口的高度 */
-
-  background-image: url('@/assets/background.jpg');
+  background-image: url('@/assets/1.jpg');
   /* 设置背景图片 */
   background-size: cover;
   /* 背景图片覆盖整个容器 */

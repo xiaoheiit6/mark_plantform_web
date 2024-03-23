@@ -39,6 +39,10 @@ const routes = [
       {
         path: 'table',
         component: import('@/views/test/table.vue')
+      },
+      {
+        path: 'testPaperList',
+        component: import('@/views/teacher/testPaper/testPaperList.vue')
       }
     ]
   },
