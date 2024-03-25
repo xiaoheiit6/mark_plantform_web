@@ -76,7 +76,7 @@
                         </a-avatar>
                         
                     </a-dropdown>
-                    <span>username</span>
+                    <span>{{ webStore.info.userName }}</span>
                 </a-flex>
             </a-layout-header>
             <a-layout-content style="margin: 0 16px">
@@ -94,12 +94,15 @@
     </a-layout>
 </template>
 <script setup>
-import { ref } from 'vue';
+import { reactive, ref } from 'vue';
 import { PieChartOutlined, TeamOutlined, CommentOutlined, UserOutlined, CloudUploadOutlined } from '@ant-design/icons-vue';
 import { useWebStore } from '@/stores/web.js';
 const webStore = useWebStore()
 const collapsed = ref(false);
 const selectedKeys = ref(['1']);
+
+
+
 const boxStyle = {
     width: '95%',
     height: '64px',
