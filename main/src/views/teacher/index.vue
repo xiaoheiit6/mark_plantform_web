@@ -56,15 +56,11 @@
                             <a-menu @click="handleMenuClick">
                                 <a-menu-item key="1">
                                     <UserOutlined />
-                                    
+                                    Your profile
                                 </a-menu-item>
                                 <a-menu-item key="2">
-                                    <UserOutlined />
-                                    2nd 
-                                </a-menu-item>
-                                <a-menu-item key="3">
-                                    <UserOutlined />
-                                    3rd item
+                                    <LogoutOutlined />
+                                    Sign out
                                 </a-menu-item>
                             </a-menu>
                         </template>
@@ -94,7 +90,7 @@
     </a-layout>
 </template>
 <script setup>
-import { reactive, ref } from 'vue';
+import { ref } from 'vue';
 import { PieChartOutlined, TeamOutlined, CommentOutlined, UserOutlined, CloudUploadOutlined } from '@ant-design/icons-vue';
 import { useWebStore } from '@/stores/web.js';
 const webStore = useWebStore()
