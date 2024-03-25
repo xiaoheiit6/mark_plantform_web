@@ -45,20 +45,45 @@
             </a-menu>
         </a-layout-sider>
         <a-layout>
-            <a-layout-header style="background: #fff; padding: 0" />
+            <a-layout-header style="background: #fff; padding: 0">
+                <a-flex :style="{ ...boxStyle }" justify="flex-end" align="center" gap="large">
+                    <a-button type="primary">Primary Button</a-button>
+                    
+                    <a-dropdown>
+                        <template #overlay>
+                            <a-menu @click="handleMenuClick">
+                                <a-menu-item key="1">
+                                    <UserOutlined />
+                                    Your profile
+                                </a-menu-item>
+                                <a-menu-item key="2">
+                                    <LogoutOutlined />
+                                    Sign out
+                                </a-menu-item>
+                            </a-menu>
+                        </template>
+                        <a-avatar :size="small">
+                            <template #icon>
+                                <UserOutlined />
+                                
+                            </template>
+                        </a-avatar>
+                        
+                    </a-dropdown>
+                    <span>username</span>
+                </a-flex>
+            </a-layout-header>
             <a-layout-content style="margin: 0 16px">
                 <a-breadcrumb style="margin: 16px 0">
-                    
+
                 </a-breadcrumb>
-                <div :style="{ padding: '24px', background: '#fff', minHeight: '360px' }">
+                <div :style="{ padding: '24px', background: '#fff', minHeight: '100%' }">
                     <router-view />
                 </div>
             </a-layout-content>
-
             <a-layout-footer style="text-align: center">
                 Ant Design ©2018 Created by Ant UED
             </a-layout-footer>
-
         </a-layout>
     </a-layout>
 </template>
@@ -67,13 +92,20 @@
 import { useWebStore } from '@/stores/web.js';
 const webStore = useWebStore()
 import { ref } from 'vue';
-import { PieChartOutlined, DownloadOutlined, UserOutlined } from '@ant-design/icons-vue';
+import { PieChartOutlined, DownloadOutlined, UserOutlined,LogoutOutlined } from '@ant-design/icons-vue';
 const collapsed = ref(false);
 const selectedKeys = ref(['1']);
+const boxStyle = {
+    width: '95%',
+    height: '64px',
+    borderRadius: '6px',
+    // border: '1px solid #40a9ff',
+};
 </script>
 
 
 <style scoped>
+
 #components-layout-demo-side .logo {
     height: 32px;
     margin: 16px;
@@ -86,5 +118,10 @@ const selectedKeys = ref(['1']);
 
 [data-theme='dark'] .site-layout .site-layout-background {
     background: #141414;
+}
+.logo {
+    height: 50px;
+    width: 100%;
+
 }
 </style>
