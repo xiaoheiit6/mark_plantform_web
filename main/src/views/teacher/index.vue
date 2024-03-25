@@ -22,7 +22,7 @@
                     </template>
                     <a-menu-item key="3">
                         <span>试卷管理</span>
-                        <router-link to="/teacher/table" />
+                        <router-link to="/teacher/testPaperList" />
                     </a-menu-item>
                     <a-menu-item key="4">Bill</a-menu-item>
                     <a-menu-item key="5">Alex</a-menu-item>
@@ -91,7 +91,7 @@
 </template>
 <script setup>
 import { ref } from 'vue';
-import { PieChartOutlined, TeamOutlined, CommentOutlined, UserOutlined, CloudUploadOutlined } from '@ant-design/icons-vue';
+import { PieChartOutlined, TeamOutlined, CommentOutlined, UserOutlined, CloudUploadOutlined,LogoutOutlined } from '@ant-design/icons-vue';
 import { useWebStore } from '@/stores/web.js';
 const webStore = useWebStore()
 const collapsed = ref(false);
