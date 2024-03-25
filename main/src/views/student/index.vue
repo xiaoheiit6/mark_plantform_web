@@ -35,6 +35,7 @@
         <a-layout>
             <a-layout-header style="background: #fff; padding: 0">
                 <a-flex :style="{ ...boxStyle }" justify="flex-end" align="center" gap="large">
+                    
                     <a-button type="primary">Primary Button</a-button>
 
                     <a-dropdown>
@@ -87,7 +88,7 @@ const boxStyle = {
     width: '95%',
     height: '64px',
     borderRadius: '6px',
-    // border: '1px solid #40a9ff',
+    
 };
 </script>
 

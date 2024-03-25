@@ -47,12 +47,12 @@ const columns = [
         key: 'name',
     },
     {
-        title: '年龄',
+        title: '答案预览',
         dataIndex: 'age',
         key: 'age',
     },
     {
-        title: '地址',
+        title: '模型分数',
         dataIndex: 'address',
         key: 'address',
     },
@@ -62,7 +62,7 @@ const columns = [
         dataIndex: 'tags',
     },
     {
-        title: '动作',
+        title: '操作',
         key: 'action',
     },
 ];
