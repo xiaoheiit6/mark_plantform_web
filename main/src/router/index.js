@@ -62,6 +62,10 @@ const routes = [
       {
         path: 'upload',
         component: import('@/views/student/upload.vue')
+      },
+      {
+        path: 'testPaperList',
+        component: import('@/views/student/testPaper/testPaperList.vue')
       }
     ]
   },

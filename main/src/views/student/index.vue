@@ -27,28 +27,16 @@
                     <a-menu-item key="5">Alex</a-menu-item>
                 </a-sub-menu>
 
-                <a-sub-menu key="sub2">
-                    <template #title>
-                        <span>
-                            <team-outlined />
-                            <span>Team</span>
-                        </span>
-                    </template>
-                    <a-menu-item key="6">Team 1</a-menu-item>
-                    <a-menu-item key="8">Team 2</a-menu-item>
-                </a-sub-menu>
+                
 
-                <a-menu-item key="9">
-                    <file-outlined />
-                    <span>File</span>
-                </a-menu-item>
+                
             </a-menu>
         </a-layout-sider>
         <a-layout>
             <a-layout-header style="background: #fff; padding: 0">
                 <a-flex :style="{ ...boxStyle }" justify="flex-end" align="center" gap="large">
                     <a-button type="primary">Primary Button</a-button>
-                    
+
                     <a-dropdown>
                         <template #overlay>
                             <a-menu @click="handleMenuClick">
@@ -65,12 +53,12 @@
                         <a-avatar :size="small">
                             <template #icon>
                                 <UserOutlined />
-                                
+
                             </template>
                         </a-avatar>
-                        
+
                     </a-dropdown>
-                    <span>username</span>
+                    <span>{{ webStore.info.userName }}</span>
                 </a-flex>
             </a-layout-header>
             <a-layout-content style="margin: 0 16px">
@@ -92,7 +80,7 @@
 import { useWebStore } from '@/stores/web.js';
 const webStore = useWebStore()
 import { ref } from 'vue';
-import { PieChartOutlined, DownloadOutlined, UserOutlined,LogoutOutlined } from '@ant-design/icons-vue';
+import { PieChartOutlined, UserOutlined, LogoutOutlined } from '@ant-design/icons-vue';
 const collapsed = ref(false);
 const selectedKeys = ref(['1']);
 const boxStyle = {
@@ -105,7 +93,6 @@ const boxStyle = {
 
 
 <style scoped>
-
 #components-layout-demo-side .logo {
     height: 32px;
     margin: 16px;
@@ -119,6 +106,7 @@ const boxStyle = {
 [data-theme='dark'] .site-layout .site-layout-background {
     background: #141414;
 }
+
 .logo {
     height: 50px;
     width: 100%;
