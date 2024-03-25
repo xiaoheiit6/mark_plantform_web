@@ -56,6 +56,10 @@
               <a-button :disabled="disabled" type="primary" html-type="submit" class="login-form-button" @click="login">
                 立即注册
               </a-button>
+              <a-form-item class="center">
+              已有帐号？
+              <a href="/login">现在登录!</a>
+              </a-form-item>
               <!-- <a-button @click="success">Success</a-button> -->
             </a-form-item>
           </a-form>
