@@ -19,6 +19,8 @@
                     <a>删除</a>
                 </a-popconfirm>
                 <a>编辑</a>
+                <a>查看</a>
+                
 
             </template>
 
