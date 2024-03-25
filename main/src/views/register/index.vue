@@ -20,22 +20,42 @@
                   <LockOutlined class="site-form-item-icon" />
                 </template>
               </a-input-password>
+              
             </a-form-item>
-  
+            <a-form-item label="邮箱" name="emial" :rules="[{ required: true, message: 'Please input your email!' }]">
+              <a-input v-model:value="formState.email">
+                <template #prefix>
+                  <UserOutlined class="site-form-item-icon" />
+                </template>
+              </a-input>
+            </a-form-item>
+            <a-form-item label="学号" name="stuNo" :rules="[{ required: true, message: 'Please input your stuNO!' }]">
+              <a-input v-model:value="formState.stuNo">
+                <template #prefix>
+                  <UserOutlined class="site-form-item-icon" />
+                </template>
+              </a-input>
+            </a-form-item>
+            <a-form-item label="班级" name="classNo" :rules="[{ required: true, message: 'Please input your classNo!' }]">
+              <a-input v-model:value="formState.classNo">
+                <template #prefix>
+                  <UserOutlined class="site-form-item-icon" />
+                </template>
+              </a-input>
+            </a-form-item>
+            <a-form-item label="姓名" name="name" :rules="[{ required: true, message: 'Please input your name!' }]">
+              <a-input v-model:value="formState.name">
+                <template #prefix>
+                  <UserOutlined class="site-form-item-icon" />
+                </template>
+              </a-input>
+            </a-form-item>
   
             
             <a-form-item class="center">
               <a-button :disabled="disabled" type="primary" html-type="submit" class="login-form-button" @click="login">
-                登录
+                立即注册
               </a-button>
-              或者
-              <a href="/register">现在注册!</a>
-            </a-form-item>
-            <a-form-item class="margin">
-              <a-form-item name="remember" no-style>
-                <a-checkbox v-model:checked="formState.remember">记住我</a-checkbox>
-              </a-form-item>
-              <a class="login-form-forgot" href="">忘记密码</a>
               <!-- <a-button @click="success">Success</a-button> -->
             </a-form-item>
           </a-form>
