@@ -2,6 +2,7 @@
     <a-layout style="min-height: 100vh">
         <a-layout-sider v-model:collapsed="collapsed" collapsible>
             <div class="logo" />
+            <span style="background-color: #fff; display: flex; " >教师批阅系统</span>
             <a-menu v-model:selectedKeys="selectedKeys" theme="dark" mode="inline">
                 <a-menu-item key="1">
                     <router-link to="/teacher/data" />
@@ -21,11 +22,16 @@
                         </span>
                     </template>
                     <a-menu-item key="3">
+                        <span>新试卷设计</span>
+                        
+                    </a-menu-item>
+                    <a-menu-item key="4">
                         <span>试卷管理</span>
                         <router-link to="/teacher/testPaperList" />
                     </a-menu-item>
-                    <a-menu-item key="4">Bill</a-menu-item>
-                    <a-menu-item key="5">Alex</a-menu-item>
+                    <a-menu-item key="5">
+                        <span>试卷批阅</span>
+                    </a-menu-item>
                 </a-sub-menu>
                 <a-sub-menu key="sub2">
                     <template #title>
@@ -38,12 +44,16 @@
                         <span>学生管理</span>
                         <router-link to="/teacher/table" />
                     </a-menu-item>
-                    <a-menu-item key="8">Team 2</a-menu-item>
+                    <a-menu-item key="7">
+                        <span>成绩统计</span>
+                        
+                    </a-menu-item>
+                    <a-menu-item key="8">
+                        <span>成绩分析</span>
+                        
+                    </a-menu-item>
                 </a-sub-menu>
-                <a-menu-item key="9">
-                    <CloudUploadOutlined />
-                    <span>File</span>
-                </a-menu-item>
+                
             </a-menu>
         </a-layout-sider>
         <a-layout>

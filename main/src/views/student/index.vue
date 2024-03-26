@@ -19,13 +19,18 @@
                     <template #title>
                         <span>
                             <user-outlined />
-                            <span>User</span>
+                            <span>考试</span>
                         </span>
                     </template>
-                    <a-menu-item key="3">Tom</a-menu-item>
-                    <a-menu-item key="4">Bill</a-menu-item>
-                    <a-menu-item key="5">Alex</a-menu-item>
+                    <a-menu-item key="3">考试列表</a-menu-item>
+                    <a-menu-item key="4">null</a-menu-item>
+                    <a-menu-item key="5">null</a-menu-item>
                 </a-sub-menu>
+                <a-menu-item key="6">
+                    <router-link to="/student/data" />
+                    <PieChartOutlined />
+                    <span>个人信息</span>
+                </a-menu-item>
 
                 
 

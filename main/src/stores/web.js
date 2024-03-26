@@ -3,10 +3,10 @@ import { defineStore } from "pinia";
 
 export const useWebStore = defineStore('web', () => {
     const info = reactive({
-        isLogin: false,
-        token: "",
+        id: -1,
         userName: "",
-        id: -1
+        token: "",
+        isLogin: false,
     })
 
 
