@@ -87,7 +87,7 @@ const boxStyle = {
 
 //请求
 const login = () => {
-  axios.post('/api/test', formState)
+  axios.post('/api/auth/stuLogin', formState)
     .then(response => {
       console.log(response.data)
     })

@@ -33,24 +33,21 @@
 <script setup>
 import { onMounted, computed, reactive, ref } from 'vue';
 import { message } from 'ant-design-vue';
+import axios from 'axios';
 const dataSource = ref([
-    {
-        key: '0',
-        name: 'Edward King 0',
-        age: 32,
-        address: 'London, Park Lane no. 0',
-    },
+    
 ]);
 
+const test = reactive({
+    test:""
+})
+
 onMounted(() => {
-    const datas = {
-
-        key: '1',
-        name: 'Edward King 0',
-        age: 32,
-        address: 'London, Park Lane no. 0',
-
-    }
+    axios.post('/api/student',test).then(response => {
+        console.log(response)
+    }).catch(error => {
+        console.log(error)
+    })
     dataSource.value.push(datas)
 })
 
