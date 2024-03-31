@@ -23,7 +23,7 @@
                     </template>
                     <a-menu-item key="3">
                         <span>新试卷设计</span>
-                        
+                        <router-link to="/teacher/addTestPaper" />
                     </a-menu-item>
                     <a-menu-item key="4">
                         <span>试卷管理</span>
@@ -42,15 +42,15 @@
                     </template>
                     <a-menu-item key="6">
                         <span>学生管理</span>
-                        <router-link to="/teacher/table" />
+                        <router-link to="/teacher/studentList" />
                     </a-menu-item>
                     <a-menu-item key="7">
                         <span>成绩统计</span>
-                        
+                        <router-link to="/teacher/studentScoreData" />
                     </a-menu-item>
                     <a-menu-item key="8">
                         <span>成绩分析</span>
-                        
+                        <router-link to="/teacher/studentScoreAnalysis" />
                     </a-menu-item>
                 </a-sub-menu>
                 
@@ -59,18 +59,17 @@
         <a-layout>
             <a-layout-header style="background: #fff; padding: 0">
                 <a-flex :style="{ ...boxStyle }" justify="flex-end" align="center" gap="large">
-                    <a-button type="primary">Primary Button</a-button>
-                    
                     <a-dropdown>
                         <template #overlay>
                             <a-menu @click="handleMenuClick">
                                 <a-menu-item key="1">
                                     <UserOutlined />
-                                    Your profile
+                                    <router-link to="/teacher/info" />
+                                    个人信息
                                 </a-menu-item>
-                                <a-menu-item key="2">
+                                <a-menu-item key="2" @click="logout">
                                     <LogoutOutlined />
-                                    Sign out
+                                    退出
                                 </a-menu-item>
                             </a-menu>
                         </template>
@@ -94,7 +93,7 @@
                 </div>
             </a-layout-content>
             <a-layout-footer style="text-align: center">
-                Ant Design ©2018 Created by Ant UED
+                这次一定队 ©2024 第十五届服务外包比赛
             </a-layout-footer>
         </a-layout>
     </a-layout>
@@ -107,7 +106,9 @@ const webStore = useWebStore()
 const collapsed = ref(false);
 const selectedKeys = ref(['1']);
 
-
+const logout = () =>{
+    console.log("logout")
+}
 
 const boxStyle = {
     width: '95%',

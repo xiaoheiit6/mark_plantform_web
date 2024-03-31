@@ -37,12 +37,24 @@ const routes = [
         component: import('@/views/teacher/success.vue')
       },
       {
-        path: 'table',
+        path: 'studentList',
         component: import('@/views/teacher/studentManage/studentList.vue')
       },
       {
         path: 'testPaperList',
         component: import('@/views/teacher/testPaper/testPaperList.vue')
+      },
+      {
+        path: 'addTestPaper',
+        component: import('@/views/teacher/testPaper/addTestPaper.vue')
+      },
+      {
+        path: 'studentScoreData',
+        component: import('@/views/teacher/studentManage/studentScoreData.vue')
+      },
+      {
+        path: 'studentScoreAnalysis',
+        component: import('@/views/teacher/studentManage/studentScoreAnalysis.vue')
       }
     ]
   },
