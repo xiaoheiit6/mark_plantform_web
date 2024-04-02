@@ -51,13 +51,13 @@
                                     <UserOutlined />
                                     Your profile
                                 </a-menu-item>
-                                <a-menu-item key="2">
+                                <a-menu-item @click="logout">
                                     <LogoutOutlined />
-                                    Sign out
+                                    退出
                                 </a-menu-item>
                             </a-menu>
                         </template>
-                        <a-avatar :size="small">
+                        <a-avatar :size="small" src="src/assets/student.png">
                             <template #icon>
                                 <UserOutlined />
 
@@ -85,17 +85,27 @@
 
 <script setup>
 import { useWebStore } from '@/stores/web.js';
-const webStore = useWebStore()
+import {  useRouter } from 'vue-router';
 import { ref } from 'vue';
 import { PieChartOutlined, UserOutlined, LogoutOutlined } from '@ant-design/icons-vue';
+const route = useRouter()
+const webStore = useWebStore()
 const collapsed = ref(false);
 const selectedKeys = ref(['1']);
 const boxStyle = {
     width: '95%',
     height: '64px',
     borderRadius: '6px',
-    
 };
+
+const logout = () =>{
+    webStore.info.id = -1;
+    webStore.info.userName = ""
+    webStore.info.token = ""
+    webStore.info.isLogin = false
+
+    route.push("/")
+}
 </script>
 
 

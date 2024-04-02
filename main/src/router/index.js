@@ -134,10 +134,11 @@ router.beforeEach((to, from, next) => {
 
 function isLoggedIn() {
   // 实现检查登录状态的逻辑
-  // return localStorage.getItem('userLoggedIn') === 'true';
+   //return localStorage.getItem('userLoggedIn') === 'true';
   
-  //return useWebStore().info.isLogin
-  return true
+   //真·逻辑
+  return useWebStore().info.isLogin
+  //return true
  
 }
 

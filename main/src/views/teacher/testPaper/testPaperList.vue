@@ -9,7 +9,6 @@
                         <a-input v-model:value="editableData[record.key].name" @pressEnter="save(record.key)" />
                         <check-outlined class="editable-cell-icon-check" @click="save(record.key)" />
                     </div>
-
                 </div>
             </template>
 

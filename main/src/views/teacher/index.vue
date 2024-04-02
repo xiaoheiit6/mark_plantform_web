@@ -73,7 +73,7 @@
                                 </a-menu-item>
                             </a-menu>
                         </template>
-                        <a-avatar :size="small">
+                        <a-avatar  src="src/assets/teacher.png">
                             <template #icon>
                                 <UserOutlined />
                                 

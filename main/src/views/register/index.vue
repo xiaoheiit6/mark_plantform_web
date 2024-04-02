@@ -1,5 +1,4 @@
 <template>
-
     <a-flex gap="middle" align="start" vertical class="container-center">
       <a-flex :style="{ ...boxStyle }" :justify="justify" :align="alignItems">
         <div class="loginbox">
@@ -84,12 +83,7 @@
     password: '',
     remember: true,
   });
-  const success = () => {
-    message.success({
-      content: '登录成功',
-      duration: 1
-    });
-  };
+
   const onFinish = values => {
     console.log('Success:', values);
   };

@@ -39,7 +39,6 @@
               <a-checkbox v-model:checked="formState.remember">记住我</a-checkbox>
             </a-form-item>
             <a class="login-form-forgot" href="">忘记密码</a>
-            <!-- <a-button @click="success">Success</a-button> -->
           </a-form-item>
         </a-form>
       </div>
@@ -52,10 +51,12 @@
 import axios from 'axios';
 import { message } from 'ant-design-vue';
 import { useWebStore } from '@/stores/web.js';
-const webStore = useWebStore()
-
 import { reactive, computed, ref } from 'vue';
-const value = ref('1')
+import { useRouter } from 'vue-router';
+
+const webStore = useWebStore();
+const route = useRouter();
+const value = ref('1');
 const justify = ref('center');
 const alignItems = ref('center');
 const formState = reactive({
@@ -63,12 +64,75 @@ const formState = reactive({
   password: '',
   remember: true,
 });
-const success = () => {
-  message.success({
-    content: '登录成功',
-    duration: 1
-  });
-};
+
+//请求
+const login = async () => {
+  try {
+    if (value.value === "1") {
+      axios.post('/api/auth/stuLogin', formState)
+        .then(response => {
+          const code = response.data.code;
+          if (code === 200) {
+            message.success({
+              content: '登录成功',
+              duration: 1
+            });
+            const { token, user_id } = response.data.data;
+
+            webStore.info.id = 0;
+            webStore.info.userName = user_id
+            webStore.info.token = token
+            webStore.info.isLogin = true
+
+            console.log(webStore.info)
+
+            route.push("/student")
+          }
+        })
+        .catch(error => {
+          console.log("error", error)
+          message.error({
+            content: '登录失败,请检查账号密码是否正确!',
+            duration: 1
+          });
+        })
+    } else {
+      axios.post('/api/auth/teacherLogin', formState)
+        .then(response => {
+          const code = response.data.code;
+          if (code === 200) {
+            message.success({
+              content: '登录成功',
+              duration: 1
+            });
+            const { token, username } = response.data.data;
+
+            webStore.info.id = 1;
+            webStore.info.userName = username
+            webStore.info.token = token
+            webStore.info.isLogin = true
+
+            console.log(webStore.info)
+            route.push("/teacher")
+          }
+        })
+        .catch(error => {
+          console.log("error", error)
+          message.error({
+            content: '登录失败,请检查账号密码是否正确!',
+            duration: 1
+          });
+        })
+    }
+  } catch (error) {
+    message.error({
+      content: '服务器错误!',
+      duration: 1
+    })
+  }
+}
+
+
 const onFinish = values => {
   console.log('Success:', values);
 };
@@ -84,28 +148,14 @@ const boxStyle = {
   borderRadius: '6px',
 
 };
-
-//请求
-const login = () => {
-  axios.post('/api/auth/stuLogin', formState)
-    .then(response => {
-      console.log(response.data)
-    })
-    .catch(error => {
-      console.error('error!', error)
-    })
-
-}
-
 </script>
-
-
 
 
 <style scoped>
 .title-center {
   text-align: center;
 }
+
 .container-center {
   display: flex;
   justify-content: center;
@@ -150,26 +200,25 @@ const login = () => {
 }
 
 /* button的水平居中 */
-.space-around{
-display: flex;
-justify-content: space-around;
+.space-around {
+  display: flex;
+  justify-content: space-around;
 }
 
 /* 登录的居中 */
-.center{
+.center {
   margin-top: 10px;
   display: flex;
   justify-content: center;
 }
 
 /* 登录按键字体的大小 */
-.login-form-button{
+.login-form-button {
   font-size: 18px;
 }
 
 /* form表单里div的下边距 */
 .ant-form-item {
-    margin-bottom: 10px;
+  margin-bottom: 10px;
 }
-
 </style>
