@@ -2,7 +2,7 @@
     <a-layout style="min-height: 100vh">
         <a-layout-sider v-model:collapsed="collapsed" collapsible>
             <div class="logo" />
-            <span style="background-color: #fff; display: flex; " >教师批阅系统</span>
+            <span style="background-color: #fff; display: flex; ">教师批阅系统</span>
             <a-menu v-model:selectedKeys="selectedKeys" theme="dark" mode="inline">
                 <a-menu-item key="1">
                     <router-link to="/teacher/data" />
@@ -53,7 +53,7 @@
                         <router-link to="/teacher/studentScoreAnalysis" />
                     </a-menu-item>
                 </a-sub-menu>
-                
+
             </a-menu>
         </a-layout-sider>
         <a-layout>
@@ -73,13 +73,13 @@
                                 </a-menu-item>
                             </a-menu>
                         </template>
-                        <a-avatar  src="src/assets/teacher.png">
+                        <a-avatar src="src/assets/teacher.png">
                             <template #icon>
                                 <UserOutlined />
-                                
+
                             </template>
                         </a-avatar>
-                        
+
                     </a-dropdown>
                     <span>{{ webStore.info.userName }}</span>
                 </a-flex>
@@ -99,15 +99,40 @@
     </a-layout>
 </template>
 <script setup>
-import { ref } from 'vue';
-import { PieChartOutlined, TeamOutlined, CommentOutlined, UserOutlined, CloudUploadOutlined,LogoutOutlined } from '@ant-design/icons-vue';
+import { reactive, ref } from 'vue';
+import { PieChartOutlined, TeamOutlined, CommentOutlined, UserOutlined, CloudUploadOutlined, LogoutOutlined } from '@ant-design/icons-vue';
 import { useWebStore } from '@/stores/web.js';
+import axios from 'axios';
+import { message } from 'ant-design-vue';
 const webStore = useWebStore()
 const collapsed = ref(false);
 const selectedKeys = ref(['1']);
 
-const logout = () =>{
-    console.log("logout")
+const logout = () => {
+    const logoutData = reactive({
+        username: webStore.info.userName,
+        token: webStore.info.token
+    })
+    axios.post("/api/auth/teacherLogout", logoutData)
+        .then(response => {
+            const code = response.data.code
+            if (code === 200) {
+                message.success({
+                    content: "退出登录成功"
+                })
+                webStore.info.id = -1;
+                webStore.info.userName = ""
+                webStore.info.token = ""
+                webStore.info.isLogin = false
+                route.push("/")
+            }
+        })
+        .catch(error =>{
+            console.log(error)
+        })
+
+
+    
 }
 
 const boxStyle = {

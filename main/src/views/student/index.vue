@@ -35,13 +35,13 @@
                     <span>个人信息</span>
                 </a-menu-item>
 
-                
+
             </a-menu>
         </a-layout-sider>
         <a-layout>
             <a-layout-header style="background: #fff; padding: 0">
                 <a-flex :style="{ ...boxStyle }" justify="flex-end" align="center" gap="large">
-                    
+
                     <a-button type="primary">Primary Button</a-button>
 
                     <a-dropdown>
@@ -85,9 +85,11 @@
 
 <script setup>
 import { useWebStore } from '@/stores/web.js';
-import {  useRouter } from 'vue-router';
-import { ref } from 'vue';
+import { useRouter } from 'vue-router';
+import { reactive, ref } from 'vue';
 import { PieChartOutlined, UserOutlined, LogoutOutlined } from '@ant-design/icons-vue';
+import axios from 'axios';
+import { message } from 'ant-design-vue';
 const route = useRouter()
 const webStore = useWebStore()
 const collapsed = ref(false);
@@ -98,13 +100,32 @@ const boxStyle = {
     borderRadius: '6px',
 };
 
-const logout = () =>{
-    webStore.info.id = -1;
-    webStore.info.userName = ""
-    webStore.info.token = ""
-    webStore.info.isLogin = false
+const logout = () => {
+    const logoutData = reactive({
+        username: webStore.info.userName,
+        token: webStore.info.token
+    })
+    axios.post("/api/auth/stuLogout", logoutData)
+        .then(response => {
+            const code = response.data.code
+            if (code === 200) {
+                message.success({
+                    content: '已经退出!'
+                })
+                webStore.info.id = -1;
+                webStore.info.userName = ""
+                webStore.info.token = ""
+                webStore.info.isLogin = false
 
-    route.push("/")
+                route.push("/")
+            }
+
+        })
+        .catch(error => {
+            console.log(error)
+        })
+
+
 }
 </script>
 
