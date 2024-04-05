@@ -93,7 +93,7 @@
                 </div>
             </a-layout-content>
             <a-layout-footer style="text-align: center">
-                这次一定队 ©2024 第十五届服务外包比赛
+                这次一定队 ©2024 第十五届服创大赛
             </a-layout-footer>
         </a-layout>
     </a-layout>
@@ -104,6 +104,8 @@ import { PieChartOutlined, TeamOutlined, CommentOutlined, UserOutlined, CloudUpl
 import { useWebStore } from '@/stores/web.js';
 import axios from 'axios';
 import { message } from 'ant-design-vue';
+import { useRouter } from 'vue-router';
+const route = useRouter()
 const webStore = useWebStore()
 const collapsed = ref(false);
 const selectedKeys = ref(['1']);
@@ -118,12 +120,13 @@ const logout = () => {
             const code = response.data.code
             if (code === 200) {
                 message.success({
-                    content: "退出登录成功"
+                    content: "已经退出!"
                 })
                 webStore.info.id = -1;
                 webStore.info.userName = ""
                 webStore.info.token = ""
                 webStore.info.isLogin = false
+
                 route.push("/")
             }
         })

@@ -42,14 +42,14 @@
             <a-layout-header style="background: #fff; padding: 0">
                 <a-flex :style="{ ...boxStyle }" justify="flex-end" align="center" gap="large">
 
-                    <a-button type="primary">Primary Button</a-button>
+                    
 
                     <a-dropdown>
                         <template #overlay>
                             <a-menu @click="handleMenuClick">
                                 <a-menu-item key="1">
                                     <UserOutlined />
-                                    Your profile
+                                    个人信息
                                 </a-menu-item>
                                 <a-menu-item @click="logout">
                                     <LogoutOutlined />
@@ -77,7 +77,7 @@
                 </div>
             </a-layout-content>
             <a-layout-footer style="text-align: center">
-                Ant Design ©2018 Created by Ant UED
+                这次一定队 ©2024 第十五届服创大赛
             </a-layout-footer>
         </a-layout>
     </a-layout>
