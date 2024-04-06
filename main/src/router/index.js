@@ -4,7 +4,8 @@ import { useWebStore } from "@/stores/web";
 const routes = [
   {
     path: '/',
-    component: () => import('@/App.vue')
+    component: () => import('@/App.vue'),
+    meta: { requiresAuth: true },
   },
   {
     path: '/route',
@@ -111,6 +112,25 @@ const router = createRouter({
 router.beforeEach((to, from, next) => {
   //设置每个页面的title
   document.title = to.meta.title || '智能阅卷平台'
+
+  if (to.path === '/student') {
+    return next('/student/data'); // 使用return确保不会继续执行后面的代码
+  }
+
+  if(to.path === '/teacher'){
+    return next('/teacher/data')
+  }
+
+  // if(to.path === '/'){
+  //   if(webStore.info.id === 0){
+  //     return next('/student')
+  //   }
+  //   if(webStore.info.id === 1){
+  //     return next('/teacher')
+  //   }
+  // }
+
+  
 
   // 检查即将进入的路由是否需要认证
   if (to.matched.some(record => record.meta.requiresAuth)) {

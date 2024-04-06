@@ -5,25 +5,30 @@
 </template>
 
 <script setup>
-import { useWebStore } from '@/stores/web.js';
-import { onMounted } from 'vue';
-import { useRouter } from 'vue-router';
+// import { useWebStore } from '@/stores/web.js';
+// import { onMounted } from 'vue';
+// import { useRouter,useRoute } from 'vue-router';
 
-const route = useRouter()
-const webStore = useWebStore()
+// const route = useRouter()
+// const router = useRoute()
+// const webStore = useWebStore()
 
-onMounted(async () =>{
-  if(webStore.info.isLogin === true){
-    if(webStore.info.id === 0){
-      route.push("/student")
-    }
-    if(webStore.info.id ===1){
-      route.push("/teacher")
-    }
-  }else{
-    route.push("/login")
-  }
-})
+// onMounted(async () =>{
+//   if(webStore.info.isLogin === true){
+//     if(webStore.info.id === 0){
+//       route.push("/student")
+//     }
+//     if(webStore.info.id ===1){
+//       route.push("/teacher")
+//     }
+//   }else{
+//     if(route.path !=='/register'){
+//       console.log(router.path)
+//       route.push("/login")
+//     }
+    
+//   }
+// })
 
 </script>
 

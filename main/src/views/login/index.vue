@@ -34,12 +34,7 @@
             或者
             <a href="/register">现在注册!</a>
           </a-form-item>
-          <a-form-item class="margin">
-            <a-form-item name="remember" no-style>
-              <a-checkbox v-model:checked="formState.remember">记住我</a-checkbox>
-            </a-form-item>
-            <a class="login-form-forgot" href="">忘记密码</a>
-          </a-form-item>
+          
         </a-form>
       </div>
     </a-flex>
@@ -62,7 +57,6 @@ const alignItems = ref('center');
 const formState = reactive({
   username: '',
   password: '',
-  remember: true,
 });
 
 //请求
