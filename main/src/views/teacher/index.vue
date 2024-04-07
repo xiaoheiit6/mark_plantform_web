@@ -81,7 +81,7 @@
                         </a-avatar>
 
                     </a-dropdown>
-                    <span>{{ webStore.info.userName }}</span>
+                    <span>{{ webStore.info.realName }}</span>
                 </a-flex>
             </a-layout-header>
             <a-layout-content style="margin: 0 16px">
@@ -133,9 +133,6 @@ const logout = () => {
         .catch(error =>{
             console.log(error)
         })
-
-
-    
 }
 
 const boxStyle = {

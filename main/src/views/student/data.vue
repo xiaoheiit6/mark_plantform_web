@@ -6,7 +6,6 @@
 </template>
 
 <script setup>
-
 import { ref, computed } from 'vue'
 import { use } from 'echarts/core'
 import { LineChart, PieChart } from 'echarts/charts'
@@ -14,6 +13,7 @@ import { GridComponent, TitleComponent, TooltipComponent, LegendComponent } from
 import { CanvasRenderer } from 'echarts/renderers'
 import VChart, { THEME_KEY } from "vue-echarts";
 import { useWebStore } from '@/stores/web.js';
+import axios from 'axios'
 const webStore = useWebStore()
 use([GridComponent, LineChart, CanvasRenderer, TitleComponent, TooltipComponent, LegendComponent, PieChart])
 

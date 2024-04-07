@@ -41,9 +41,6 @@
         <a-layout>
             <a-layout-header style="background: #fff; padding: 0">
                 <a-flex :style="{ ...boxStyle }" justify="flex-end" align="center" gap="large">
-
-                    
-
                     <a-dropdown>
                         <template #overlay>
                             <a-menu @click="handleMenuClick">
@@ -66,7 +63,7 @@
                         </a-avatar>
 
                     </a-dropdown>
-                    <span>{{ webStore.info.userName }}</span>
+                    <span>{{ webStore.info.realName }}</span>
                 </a-flex>
             </a-layout-header>
             <a-layout-content style="margin: 0 16px">
