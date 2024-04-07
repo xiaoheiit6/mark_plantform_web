@@ -1,4 +1,5 @@
 <template>
+
   <a-table :columns="columns" :data-source="data">
     <template #headerCell="{ column }">
       <template v-if="column.key === 'name'">
@@ -19,36 +20,36 @@
         <span>
           <a-tag v-for="tag in record.tags" :key="tag"
             :color="tag === 'loser' ? 'volcano' : tag.length > 5 ? 'geekblue' : 'green'">
-            {{ tag.toUpperCase() }}
+            {{ tag }}
           </a-tag>
         </span>
       </template>
       <template v-else-if="column.key === 'action'">
         <span>
-          <a>Invite 一 {{ record.name }}</a>
+          <a @click="showGarde(record)">查看成绩</a>
           <a-divider type="vertical" />
-
-
-          <a class="ant-dropdown-link" @click="showModal(record)">
+          <a @click="showModal(record)">
             上传
           </a>
-
         </span>
       </template>
     </template>
   </a-table>
+  
+<!-- 成绩对话框 -->
+  <a-modal :open="open" 
+           title="成绩" 
+           @ok="handleOkGarde"
+           @cancel="handleCancelGarde">
+    <p>Some contents...</p>
+    <p>Some contents...</p>
+    <p>Some contents...</p>
+  </a-modal>
 
   <!-- Modal 对话框 -->
   <a-modal title="上传文件" :visible="isModalVisible" @ok="handleOk" @cancel="handleCancel">
-
-    <a-upload-dragger 
-      v-model:fileList="fileList" 
-      name="file"
-      :data="uploadData" 
-      :multiple="true"
-      action="/api/student/stuUpload" 
-      @change="handleChange" 
-      @drop="handleDrop" >
+    <a-upload-dragger v-model:fileList="fileList" name="file" :data="uploadData" :multiple="true"
+      action="/api/student/stuUpload" @change="handleChange" @drop="handleDrop">
 
       <p class="ant-upload-drag-icon">
         <FolderAddTwoTone />
@@ -59,7 +60,6 @@
         band files
       </p>
     </a-upload-dragger>
-
   </a-modal>
 
 </template>
@@ -73,6 +73,8 @@ const webStore = useWebStore()
 const fileList = ref([]);
 const isModalVisible = ref(false);
 const selectedKey = ref('');
+const open = ref(false)
+
 
 const columns = [
   {
@@ -81,41 +83,57 @@ const columns = [
     key: 'name',
   },
   {
-    title: 'Age',
+    title: '试卷分数',
     dataIndex: 'age',
     key: 'age',
   },
   {
-    title: 'Address',
+    title: '试卷描述',
     dataIndex: 'address',
     key: 'address',
   },
   {
-    title: 'Tags',
+    title: '状态',
     key: 'tags',
     dataIndex: 'tags',
   },
   {
-    title: 'Action',
+    title: '操作',
     key: 'action',
   },
 ];
 const data = reactive([
   {
     key: '1',
-    name: 'John Brown',
+    name: '小明',
     age: 32,
-    address: 'New York No. 1 Lake Park',
+    address: '纽约大街',
     tags: ['nice', 'developer'],
   },
   {
     key: '2',
-    name: 'John Brown',
+    name: '小红',
     age: 32,
-    address: 'New York No. 1 Lake Park',
+    address: '纽约大街222',
     tags: ['nice', 'developer'],
   },
 ])
+
+const showGarde = (record) => {
+  selectedKey.value = record.key;
+  open.value = true;
+
+}
+
+const handleOkGarde = () =>{
+  open.value = false;
+}
+
+const handleCancelGarde = () =>{
+  open.value = false;
+}
+
+
 
 // 修改 showModal 方法以接收当前行的数据
 const showModal = (record) => {
@@ -123,7 +141,7 @@ const showModal = (record) => {
   isModalVisible.value = true;
 };
 
-// 处理点击对话框OK按钮的方法
+//处理点击对话框OK按钮的方法
 const handleOk = () => {
   console.log('点击了OK!', '选中的行的 key 是：', selectedKey.value);
   isModalVisible.value = false;
@@ -156,7 +174,5 @@ const handleChange = info => {
 function handleDrop(e) {
   console.log(e);
 }
-
-
 
 </script>

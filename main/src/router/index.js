@@ -73,8 +73,8 @@ const routes = [
         component: import('@/views/student/data.vue')
       },
       {
-        path: 'upload',
-        component: import('@/views/student/upload.vue')
+        path: 'chat',
+        component: import('@/views/student/chat.vue')
       },
       {
         path: 'testPaperList',
@@ -120,17 +120,6 @@ router.beforeEach((to, from, next) => {
   if(to.path === '/teacher'){
     return next('/teacher/data')
   }
-
-  // if(to.path === '/'){
-  //   if(webStore.info.id === 0){
-  //     return next('/student')
-  //   }
-  //   if(webStore.info.id === 1){
-  //     return next('/teacher')
-  //   }
-  // }
-
-  
 
   // 检查即将进入的路由是否需要认证
   if (to.matched.some(record => record.meta.requiresAuth)) {

@@ -10,9 +10,9 @@
                 </a-menu-item>
 
                 <a-menu-item key="2">
-                    <router-link to="/student/upload" />
+                    <router-link to="/student/chat" />
                     <UserOutlined />
-                    <span>上传页面</span>
+                    <span>智能问答</span>
                 </a-menu-item>
 
                 <a-sub-menu key="sub1">
@@ -48,6 +48,7 @@
                         <template #overlay>
                             <a-menu @click="handleMenuClick">
                                 <a-menu-item key="1">
+                                    <router-link to="/student/info" />
                                     <UserOutlined />
                                     个人信息
                                 </a-menu-item>
