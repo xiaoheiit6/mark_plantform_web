@@ -3,19 +3,19 @@
 
     <a-form-item label="试卷名称" :name="paperName" 
     :rules="[{ required: true, message: '请输入你的试卷名称!' }]">
-      <a-input v-model:value="formState.paperName" />
+      <a-input v-model:value="dynamicValidateForm.paperName" />
     </a-form-item>
 
     <a-form-item label="试卷描述" :name="description"
         :rules="[{ required: true, message: '请输入你的试卷描述!' }]">
-        <a-input v-model:value="formState.description" />
+        <a-input v-model:value="dynamicValidateForm.description" />
     </a-form-item>
 
     <a-space v-for="(question, index) in dynamicValidateForm.questions" :key="question.id"
       style="display: flex; margin-bottom: 8px" align="baseline">
-      <a-form-item :label="'题号 ' + (index + 1) + ' 标准答案'" :name="['questions', index, 'answer']"
+      <a-form-item :label="'题号 ' + (index + 1) + ' 标准答案'" :name="['questions', index, 'standardAnswer']"
         :rules="{ required: true, message: '缺少标准答案', }">
-        <a-input v-model:value="question.answer" placeholder="标准答案" />
+        <a-input v-model:value="question.standardAnswer" placeholder="标准答案" />
       </a-form-item>
       <a-form-item :label="'题号 ' + (index + 1) + ' 评分标准'" :name="['questions', index, 'criteria']"
         :rules="{ required: true, message: '缺少评分标准', }">
@@ -39,23 +39,19 @@
 import { reactive, ref } from 'vue';
 import { MinusCircleOutlined, PlusOutlined } from '@ant-design/icons-vue';
 import { useWebStore } from '@/stores/web.js';
+import { message } from 'ant-design-vue';
 import axios from 'axios';
-
-const formState = reactive({
-  paperName: '',
-  description: '',
-  remember: true,
-});
 
 const webStore = useWebStore()
 const formRef = ref();
-const dynamicValidateForm = reactive({
 
+
+const dynamicValidateForm = reactive({
   questions: [],
   username: webStore.info.userName,
   token: webStore.info.token,
-  // paperName:
-  // description
+  paperName: '',
+  description: '',
 });
 
 const removeQuestion = question => {
@@ -66,23 +62,32 @@ const removeQuestion = question => {
 };
 
 const addQuestion = () => {
+  // 使用当前问题列表的长度作为新问题的索引
+  const index = dynamicValidateForm.questions.length;
   dynamicValidateForm.questions.push({
-    answer: '',
+    standardAnswer: '',
     criteria: '',
-    id: Date.now(),
+    question: index.toString() // 将索引保存在问题对象中
   });
 };
 
+
 const onFinish = values => {
-  console.log('表单的值:', values);
-  console.log('问题列表:', dynamicValidateForm);
+  message.success('试卷删除成功');
   axios.post("/api/teacher/creatPaper",dynamicValidateForm)
   .then(response =>{
+    if(response.data.code === 200){
+      message.success('试卷删除成功');
+      console.log("success")
+    }
     
   })
   .catch(error=>{
     console.log(error)
   })
+  console.log('表单的值:', values);
+  console.log('问题列表:', dynamicValidateForm);
+  
 
 };
 </script>
