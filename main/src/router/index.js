@@ -50,6 +50,10 @@ const routes = [
         component: import('@/views/teacher/testPaper/addTestPaper.vue')
       },
       {
+        path: "testPaperDetails/:paperId",
+        component: import('@/views/teacher/testPaper/testPaperDetails.vue')
+      },
+      {
         path: 'studentScoreData',
         component: import('@/views/teacher/studentManage/studentScoreData.vue')
       },
@@ -117,7 +121,7 @@ router.beforeEach((to, from, next) => {
     return next('/student/data'); // 使用return确保不会继续执行后面的代码
   }
 
-  if(to.path === '/teacher'){
+  if (to.path === '/teacher') {
     return next('/teacher/data')
   }
 
@@ -143,12 +147,12 @@ router.beforeEach((to, from, next) => {
 
 function isLoggedIn() {
   // 实现检查登录状态的逻辑
-   //return localStorage.getItem('userLoggedIn') === 'true';
-  
-   //真·逻辑
+  //return localStorage.getItem('userLoggedIn') === 'true';
+
+  //真·逻辑
   return useWebStore().info.isLogin
   //return true
- 
+
 }
 
 

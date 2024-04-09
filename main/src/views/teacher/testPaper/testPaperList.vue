@@ -23,9 +23,9 @@
             <!-- 根据实际情况调整或添加其他列的模板 -->
             <template v-else-if="column.key === 'action'">
                 <span>
-                    <a>模型结果</a>
-                    <a-divider type="vertical" />
-                    <a>查看详情</a>
+                    <!-- <a>模型结果</a>
+                    <a-divider type="vertical" /> -->
+                    <a @click="viewDetails(record)">查看详情</a>
                     <a-divider type="vertical" />
                     <a @click="showGarde(record)">查看成绩</a>
                     <a-divider type="vertical" />
@@ -53,8 +53,9 @@ import { message } from 'ant-design-vue';
 import axios from 'axios';
 import { SmileOutlined } from '@ant-design/icons-vue';
 import { useWebStore } from '@/stores/web.js';
+import { useRouter } from 'vue-router';
 
-
+const router = useRouter();
 // 使用WebStore
 const webStore = useWebStore();
 const selectedKey = ref('');
@@ -88,6 +89,11 @@ const columns = reactive([
 // 试卷数据，初始为空数组
 const data = ref([]);
 
+
+const viewDetails = (record) => {
+  // 使用编程式导航跳转到详情页，并传递 paperId 参数
+  router.push({ path: `/teacher/testPaperDetails/${ record.paperId }` })
+};
 
 // 从后端获取试卷数据
 const fetchPapers = async () => {

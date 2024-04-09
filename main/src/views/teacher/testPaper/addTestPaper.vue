@@ -73,11 +73,10 @@ const addQuestion = () => {
 
 
 const onFinish = values => {
-  message.success('试卷删除成功');
+  message.success('添加试卷成功');
   axios.post("/api/teacher/creatPaper",dynamicValidateForm)
   .then(response =>{
     if(response.data.code === 200){
-      message.success('试卷删除成功');
       console.log("success")
     }
     
@@ -87,7 +86,6 @@ const onFinish = values => {
   })
   console.log('表单的值:', values);
   console.log('问题列表:', dynamicValidateForm);
-  
 
 };
 </script>
