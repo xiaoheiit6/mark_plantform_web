@@ -1,5 +1,4 @@
 <template>
-
   <a-table :columns="columns" :data-source="data">
     <template #headerCell="{ column }">
       <template v-if="column.key === 'name'">
@@ -12,37 +11,35 @@
 
     <template #bodyCell="{ column, record }">
       <template v-if="column.key === 'name'">
-        <a>
-          {{ record.name }}
-        </a>
+        <span>{{ record.paperName }}</span>
       </template>
-      <template v-else-if="column.key === 'tags'">
+      <template v-else-if="column.key === 'description'">
+        <span>{{ record.description }}</span>
+      </template>
+      <template v-else-if="column.key === 'score'">
         <span>
-          <a-tag v-for="tag in record.tags" :key="tag"
-            :color="tag === 'loser' ? 'volcano' : tag.length > 5 ? 'geekblue' : 'green'">
-            {{ tag }}
-          </a-tag>
+        <span v-if="record.score !== -1">{{ record.score }}</span>  
+        <a-tag v-else-if="record.score === -1" color="red">未评阅</a-tag>
+        </span>
+      </template>
+      <template v-else-if="column.key === 'submission'">
+        <span>
+          <a-tag v-if="record.submission === 0" color="red">未上传</a-tag>
+          <a-tag v-else-if="record.submission === 1" color="green">已上传</a-tag>
         </span>
       </template>
       <template v-else-if="column.key === 'action'">
         <span>
-          <a @click="showGarde(record)">查看成绩</a>
+          <a @click="showGrade(record)">查看成绩</a>
           <a-divider type="vertical" />
-          <a @click="showModal(record)">
-            上传
-          </a>
+          <a @click="showModal(record)">上传</a>
         </span>
       </template>
     </template>
   </a-table>
-  
-<!-- 成绩对话框 -->
-  <a-modal :open="open" 
-           title="成绩" 
-           @ok="handleOkGarde"
-           @cancel="handleCancelGarde">
-    <p>Some contents...</p>
-    <p>Some contents...</p>
+
+  <!-- 成绩对话框 -->
+  <a-modal :open="open" title="成绩" @ok="handleOkGrade" @cancel="handleCancelGrade">
     <p>Some contents...</p>
   </a-modal>
 
@@ -50,129 +47,130 @@
   <a-modal title="上传文件" :visible="isModalVisible" @ok="handleOk" @cancel="handleCancel">
     <a-upload-dragger v-model:fileList="fileList" name="file" :data="uploadData" :multiple="true"
       action="/api/student/stuUpload" @change="handleChange" @drop="handleDrop">
-
       <p class="ant-upload-drag-icon">
         <FolderAddTwoTone />
       </p>
       <p class="ant-upload-text">点击或者拖拽文件到此处上传</p>
       <p class="ant-upload-hint">
-        Support for a single or bulk upload. Strictly prohibit from uploading company data or other
-        band files
+        Support for a single or bulk upload. Strictly prohibit from uploading company data or other band files
       </p>
     </a-upload-dragger>
   </a-modal>
-
 </template>
 
 <script setup>
-import { ref, reactive, computed } from 'vue';
+import { ref, reactive, onMounted, computed } from 'vue';
+import axios from 'axios';
 import { message } from 'ant-design-vue';
-import { FolderAddTwoTone } from '@ant-design/icons-vue';
+import { FolderAddTwoTone, SmileOutlined } from '@ant-design/icons-vue';
 import { useWebStore } from '@/stores/web.js';
-const webStore = useWebStore()
-const fileList = ref([]);
+
+const webStore = useWebStore();
 const isModalVisible = ref(false);
 const selectedKey = ref('');
-const open = ref(false)
+const open = ref(false);
+const fileList = ref([]);
 
-
+// 表格列配置
 const columns = [
   {
-    name: 'Name',
-    dataIndex: 'name',
+    title: '试卷名称',
+    dataIndex: 'paperName',
     key: 'name',
   },
+  
   {
-    title: '试卷分数',
-    dataIndex: 'age',
-    key: 'age',
+    title: '描述',
+    dataIndex: 'description',
+    key: 'description',
   },
   {
-    title: '试卷描述',
-    dataIndex: 'address',
-    key: 'address',
+    title: '分数',
+    dataIndex: 'score',
+    key: 'score',
   },
   {
     title: '状态',
-    key: 'tags',
-    dataIndex: 'tags',
+    key: 'submission'
   },
   {
     title: '操作',
     key: 'action',
   },
 ];
-const data = reactive([
-  {
-    key: '1',
-    name: '小明',
-    age: 32,
-    address: '纽约大街',
-    tags: ['nice', 'developer'],
-  },
-  {
-    key: '2',
-    name: '小红',
-    age: 32,
-    address: '纽约大街222',
-    tags: ['nice', 'developer'],
-  },
-])
 
-const showGarde = (record) => {
-  selectedKey.value = record.key;
+// 试卷数据
+const data = reactive([]);
+
+// 获取试卷数据
+onMounted(() => {
+  fetchData();
+});
+
+const fetchData = async () => {
+  try {
+    const response = await axios.post('/api/student/stuGetAllPaper', {
+      username: webStore.info.userName,
+      token: webStore.info.token,
+      
+    });
+    data.splice(0, data.length, ...response.data); // 清空data并添加新数据
+  } catch (error) {
+    message.error('获取试卷数据失败');
+    console.error(error);
+  }
+};
+
+// 显示成绩
+const showGrade = (record) => {
+  selectedKey.value = record.paperId;
   open.value = true;
+};
 
-}
-
-const handleOkGarde = () =>{
+const handleOkGrade = () => {
   open.value = false;
-}
+};
 
-const handleCancelGarde = () =>{
+const handleCancelGrade = () => {
   open.value = false;
-}
+};
 
-
-
-// 修改 showModal 方法以接收当前行的数据
+// 显示上传模态框
 const showModal = (record) => {
-  selectedKey.value = record.key; // 存储当前行的 key 值
+  selectedKey.value = record.paperId;
   isModalVisible.value = true;
 };
 
-//处理点击对话框OK按钮的方法
+// 点击OK
 const handleOk = () => {
-  console.log('点击了OK!', '选中的行的 key 是：', selectedKey.value);
   isModalVisible.value = false;
 };
 
-// 处理点击对话框取消按钮的方法
+// 点击取消
 const handleCancel = () => {
-  console.log('点击了取消');
   isModalVisible.value = false;
 };
 
-// 把 uploadData 改成计算属性
+// 上传数据
 const uploadData = computed(() => ({
   username: webStore.info.userName,
   token: webStore.info.token,
   paperId: selectedKey.value,
 }));
 
-const handleChange = info => {
-  const status = info.file.status;
-  if (status !== 'uploading') {
-    console.log(info.file, info.fileList);
-  }
-  if (status === 'done') {
-    message.success(`${info.file.name} file uploaded successfully.`);
-  } else if (status === 'error') {
-    message.error(`${info.file.name} 上传失败!`);
+const handleChange = (info) => {
+  if (info.file.status === 'done') {
+    message.success(`${info.file.name} 上传成功`);
+  } else if (info.file.status === 'error') {
+    message.error(`${info.file.name} 上传失败`);
   }
 };
-function handleDrop(e) {
-  console.log(e);
-}
 
+function handleDrop(e) {
+  console.log('Dropped files', e.dataTransfer.files);
+}
 </script>
+
+<style scoped>
+/* 这里可以添加一些CSS样式，如果需要的话 */
+</style>
