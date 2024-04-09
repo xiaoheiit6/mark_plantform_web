@@ -30,6 +30,8 @@
       </template>
       <template v-else-if="column.key === 'action'">
         <span>
+          <a @click="viewDetails(record)">查看详情</a>
+          <a-divider type="vertical" />
           <a @click="showGrade(record)">查看成绩</a>
           <a-divider type="vertical" />
           <a @click="showModal(record)">上传</a>
@@ -64,6 +66,9 @@ import axios from 'axios';
 import { message } from 'ant-design-vue';
 import { FolderAddTwoTone, SmileOutlined } from '@ant-design/icons-vue';
 import { useWebStore } from '@/stores/web.js';
+import { useRouter } from 'vue-router';
+
+const router = useRouter();
 
 const webStore = useWebStore();
 const isModalVisible = ref(false);
@@ -101,6 +106,11 @@ const columns = [
 
 // 试卷数据
 const data = reactive([]);
+
+const viewDetails = (record) => {
+  // 使用编程式导航跳转到详情页，并传递 paperId 参数
+  router.push({ path: `/student/testPaperDetails/${ record.paperId }` })
+};
 
 // 获取试卷数据
 onMounted(() => {

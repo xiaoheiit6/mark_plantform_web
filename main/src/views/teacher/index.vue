@@ -85,7 +85,9 @@
             </a-layout-header>
             <a-layout-content style="margin: 0 16px">
                 <a-breadcrumb style="margin: 16px 0">
-
+                    <a-breadcrumb-item v-for="(breadcrumb, index) in breadcrumbs" :key="index">
+                        <router-link :to="breadcrumb.path">{{ breadcrumb.text }}</router-link>
+                    </a-breadcrumb-item>
                 </a-breadcrumb>
                 <div :style="{ padding: '24px', background: '#fff', minHeight: '100%' }">
                     <router-view />
@@ -99,16 +101,27 @@
 </template>
 
 <script setup>
-import { reactive, ref } from 'vue';
+import { reactive, ref, computed } from 'vue';
 import { PieChartOutlined, TeamOutlined, CommentOutlined, UserOutlined, CloudUploadOutlined, LogoutOutlined } from '@ant-design/icons-vue';
 import { useWebStore } from '@/stores/web.js';
 import axios from 'axios';
 import { message } from 'ant-design-vue';
-import { useRouter } from 'vue-router';
+import { useRouter,useRoute } from 'vue-router';
 const route = useRouter()
+const router = useRoute()
 const webStore = useWebStore()
 const collapsed = ref(false);
 const selectedKeys = ref(['1']);
+
+const breadcrumbs = computed(() => {
+  let matched = router.matched.filter(item => item.meta && item.meta.breadcrumb);
+  return matched.map(item => {
+    return {
+      text: item.meta.breadcrumb,
+      path: item.path
+    };
+  });
+});
 
 const logout = () => {
     const logoutData = reactive({

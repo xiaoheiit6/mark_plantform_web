@@ -23,7 +23,7 @@ const routes = [
   {
     path: '/teacher',
     component: () => import('@/views/teacher/index.vue'),
-    meta: { requiresAuth: true },
+    meta: { requiresAuth: true, breadcrumb: '教师端' },
     children: [
       {
         path: 'info',
@@ -31,58 +31,76 @@ const routes = [
       },
       {
         path: 'data',
-        component: import('@/views/teacher/data.vue')
+        component: import('@/views/teacher/data.vue'),
+        meta: {breadcrumb: '数据分析'}
       },
       {
         path: 'success',
-        component: import('@/views/teacher/success.vue')
+        component: import('@/views/teacher/success.vue'),
+        meta: {breadcrumb: '成功页面'}
       },
       {
         path: 'studentList',
-        component: import('@/views/teacher/studentManage/studentList.vue')
+        component: import('@/views/teacher/studentManage/studentList.vue'),
+        meta: {breadcrumb: '学生列表'}
       },
       {
         path: 'testPaperList',
-        component: import('@/views/teacher/testPaper/testPaperList.vue')
+        component: import('@/views/teacher/testPaper/testPaperList.vue'),
+        meta: {breadcrumb: '试卷列表'}
       },
       {
         path: 'addTestPaper',
-        component: import('@/views/teacher/testPaper/addTestPaper.vue')
+        component: import('@/views/teacher/testPaper/addTestPaper.vue'),
+        meta: {breadcrumb: '新建试卷'}
+
       },
       {
         path: "testPaperDetails/:paperId",
-        component: import('@/views/teacher/testPaper/testPaperDetails.vue')
+        component: import('@/views/teacher/testPaper/testPaperDetails.vue'),
+        meta: {breadcrumb: '试卷详情'}
       },
       {
         path: 'studentScoreData',
-        component: import('@/views/teacher/studentManage/studentScoreData.vue')
+        component: import('@/views/teacher/studentManage/studentScoreData.vue'),
+        meta: {breadcrumb: '成绩统计'}
       },
       {
         path: 'studentScoreAnalysis',
-        component: import('@/views/teacher/studentManage/studentScoreAnalysis.vue')
+        component: import('@/views/teacher/studentManage/studentScoreAnalysis.vue'),
+        meta: {breadcrumb: '成绩分析'}
       }
     ]
   },
   {
     path: '/student',
     component: () => import('@/views/student/index.vue'),
-    meta: { requiresAuth: true },
+    meta: { requiresAuth: true, breadcrumb: '学生端' },
     children: [
       {
         path: 'info',
         component: import('@/views/student/info.vue')
+        
       },
       {
         path: 'data',
-        component: import('@/views/student/data.vue')
+        component: import('@/views/student/data.vue'),
+        meta: {breadcrumb: '数据分析'}
       },
       {
         path: 'chat',
-        component: import('@/views/student/chat.vue')
+        component: import('@/views/student/chat.vue'),
+        meta: {breadcrumb: '智能问答'}
       },
       {
         path: 'testPaperList',
-        component: import('@/views/student/testPaper/testPaperList.vue')
+        component: import('@/views/student/testPaper/testPaperList.vue'),
+        meta: {breadcrumb: '试卷列表'}
+      },
+      {
+        path: 'testPaperDetails/:paperId',
+        component: import('@/views/student/testPaper/testPaperDetails.vue'),
+        meta: {breadcrumb: '试卷详情'}
       }
     ]
   },

@@ -68,7 +68,9 @@
             </a-layout-header>
             <a-layout-content style="margin: 0 16px">
                 <a-breadcrumb style="margin: 16px 0">
-
+                    <a-breadcrumb-item v-for="(breadcrumb, index) in breadcrumbs" :key="index">
+                        <router-link :to="breadcrumb.path">{{ breadcrumb.text }}</router-link>
+                    </a-breadcrumb-item>
                 </a-breadcrumb>
                 <div :style="{ padding: '24px', background: '#fff', minHeight: '100%' }">
                     <router-view />
@@ -83,11 +85,13 @@
 
 <script setup>
 import { useWebStore } from '@/stores/web.js';
-import { useRouter } from 'vue-router';
-import { reactive, ref } from 'vue';
+import { useRouter,useRoute } from 'vue-router';
+import { reactive, ref, computed } from 'vue';
 import { PieChartOutlined, UserOutlined, LogoutOutlined } from '@ant-design/icons-vue';
 import axios from 'axios';
 import { message } from 'ant-design-vue';
+
+const router = useRoute()
 const route = useRouter()
 const webStore = useWebStore()
 const collapsed = ref(false);
@@ -97,6 +101,16 @@ const boxStyle = {
     height: '64px',
     borderRadius: '6px',
 };
+
+const breadcrumbs = computed(() => {
+  let matched = router.matched.filter(item => item.meta && item.meta.breadcrumb);
+  return matched.map(item => {
+    return {
+      text: item.meta.breadcrumb,
+      path: item.path
+    };
+  });
+});
 
 const logout = () => {
     const logoutData = reactive({
@@ -144,16 +158,23 @@ const logout = () => {
 }
 
 .logo {
-    height: 80px; /* 根据需要调整高度 */
-    width: 80px; /* 宽度和高度保持一致以形成完美的圆形 */
+    height: 80px;
+    /* 根据需要调整高度 */
+    width: 80px;
+    /* 宽度和高度保持一致以形成完美的圆形 */
     background-image: url('/api/static/avatar/student.png');
-    background-size: cover; /* 或者使用 contain 根据您的需要 */
+    background-size: cover;
+    /* 或者使用 contain 根据您的需要 */
     background-position: center;
     background-repeat: no-repeat;
-    border-radius: 50%; /* 添加这一行来使图标变成圆形 */
-    display: flex; /* 启用 flex 布局 */
-    justify-content: center; /* 水平居中 */
-    align-items: center; /* 垂直居中 */
+    border-radius: 50%;
+    /* 添加这一行来使图标变成圆形 */
+    display: flex;
+    /* 启用 flex 布局 */
+    justify-content: center;
+    /* 水平居中 */
+    align-items: center;
+    /* 垂直居中 */
     margin: auto;
 }
 </style>
