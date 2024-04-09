@@ -2,7 +2,7 @@
     <a-layout style="min-height: 100vh">
         <a-layout-sider v-model:collapsed="collapsed" collapsible>
             <div class="logo" />
-            <span style="background-color: #fff; display: flex; ">教师批阅系统</span>
+            <!-- <span style="background-color: #fff; display: flex; ">教师批阅系统</span> -->
             <a-menu v-model:selectedKeys="selectedKeys" theme="dark" mode="inline">
                 <a-menu-item key="1">
                     <router-link to="/teacher/data" />
@@ -73,10 +73,9 @@
                                 </a-menu-item>
                             </a-menu>
                         </template>
-                        <a-avatar src="src/assets/teacher.png">
+                        <a-avatar src="/api/static/avatar/teacher.png">
                             <template #icon>
                                 <UserOutlined />
-
                             </template>
                         </a-avatar>
 
@@ -98,6 +97,7 @@
         </a-layout>
     </a-layout>
 </template>
+
 <script setup>
 import { reactive, ref } from 'vue';
 import { PieChartOutlined, TeamOutlined, CommentOutlined, UserOutlined, CloudUploadOutlined, LogoutOutlined } from '@ant-design/icons-vue';
@@ -158,8 +158,17 @@ const boxStyle = {
 }
 
 .logo {
-    height: 50px;
-    width: 100%;
-
+    height: 80px; /* 根据需要调整高度 */
+    width: 80px; /* 宽度和高度保持一致以形成完美的圆形 */
+    background-image: url('/api/static/avatar/teacher.png');
+    background-size: cover; /* 或者使用 contain 根据您的需要 */
+    background-position: center;
+    background-repeat: no-repeat;
+    border-radius: 50%; /* 添加这一行来使图标变成圆形 */
+    display: flex; /* 启用 flex 布局 */
+    justify-content: center; /* 水平居中 */
+    align-items: center; /* 垂直居中 */
+    margin: auto;
 }
+
 </style>
