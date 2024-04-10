@@ -29,6 +29,8 @@
                     <a-divider type="vertical" />
                     <a @click="showGarde(record)">查看成绩</a>
                     <a-divider type="vertical" />
+                    <a @click="exportGrade(record)">导出数据</a>
+                    <a-divider type="vertical" />
                     <a-popconfirm title="确定要删除?" ok-text="是" cancel-text="否" @confirm="() => confirmDelete(record)"
                         @cancel="cancel">
                         <a>删除</a>
@@ -111,6 +113,39 @@ const fetchPapers = async () => {
         console.error(error);
     }
 };
+
+const exportGrade = (record) => {
+    const exportInfo = reactive({
+        username: webStore.info.userName,
+        token: webStore.info.token,
+        paperId: record.paperId.toString()
+    });
+
+    axios.post('/api/teacher/exportGrade', exportInfo, { responseType: 'blob' })
+    .then(response => {
+        const url = window.URL.createObjectURL(new Blob([response.data]));
+        const link = document.createElement('a');
+        link.href = url;
+        // 假设服务器返回的文件名在response.headers['content-disposition']中
+        // 如果不是这样，请替换为正确的方式获取文件名
+        const contentDisposition = response.headers['content-disposition'];
+        let fileName = 'downloaded_file';
+        if (contentDisposition) {
+            const fileNameMatch = contentDisposition.match(/filename="?(.+)"?/);
+            if (fileNameMatch.length === 2)
+                fileName = fileNameMatch[1];
+        }
+        link.setAttribute('download', fileName);
+        document.body.appendChild(link);
+        link.click();
+        link.remove();
+        window.URL.revokeObjectURL(url);
+    })
+    .catch(error => {
+        console.error('导出文件时发生错误:', error);
+    });
+};
+
 
 // 组件挂载时请求数据
 onMounted(fetchPapers);
