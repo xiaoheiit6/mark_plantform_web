@@ -1,27 +1,8 @@
-<!-- <script setup>
-import { useRoute } from 'vue-router'
-
-const route = useRoute()
-console.log(route.params.paperId) // 输出路由参数id
-
-
-</script>
-
-<template>
-id: {{ $route.params.paperId }} <br>
-</template>
-
-<style scoped>
-
-</style> -->
-
-
 <template>
     <a-table :columns="columns" :data-source="data">
         <template #headerCell="{ column }">
             <template v-if="column.key === 'name'">
                 <span>
-                    <smile-outlined />
                     姓名
                 </span>
             </template>
@@ -29,105 +10,95 @@ id: {{ $route.params.paperId }} <br>
 
         <template #bodyCell="{ column, record }">
             <template v-if="column.key === 'name'">
-                <a>
-                    {{ record.name }}
-                </a>
-            </template>
-            <template v-else-if="column.key === 'tags'">
                 <span>
-                    <a-tag v-for="tag in record.tags" :key="tag"
-                        :color="tag === 'loser' ? 'volcano' : tag.length > 5 ? 'geekblue' : 'green'">
-                        {{ tag.toUpperCase() }}
-                    </a-tag>
+                    {{ record.name }}
                 </span>
+            </template>
+            <template v-else-if="column.key === 'image_paths'">
+                <a-image :src="record.image_paths" :width="100" />
+            </template>
+            <template v-else-if="column.key === 'score'">
+                {{ record.score }}
             </template>
             <template v-else-if="column.key === 'action'">
                 <span>
-                    <a>Delete</a>
+                    <a @click="viewDetails(record)">查看模型评阅详情</a>
                     <a-divider type="vertical" />
-                    <a class="ant-dropdown-link">
-                        More actions
-                        <down-outlined />
-                    </a>
+                    <a @click="showGarde(record)">查看成绩详情</a>
                 </span>
             </template>
-            <template v-else-if="column.key === 'age'">
-                <a-image :width="100" src="https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png" />
-            </template>
+
         </template>
     </a-table>
 </template>
+
 <script setup>
+import { ref, onMounted } from 'vue';
+import axios from 'axios'; // 确保你已经安装并导入了axios
+import { useRoute, useRouter } from 'vue-router';
+import { useWebStore } from '@/stores/web.js';
+
+const webStore = useWebStore();
+const route = useRoute();
+const router = useRouter();
+// console.log(route.params.paperId) // 输出路由参数id
+
+// 列配置
 const columns = [
     {
-        name: 'Name',
+        title: '姓名',
         dataIndex: 'name',
         key: 'name',
     },
     {
-        title: '答案预览',
-        dataIndex: 'age',
-        key: 'age',
+        title: '用户名',
+        dataIndex: 'username',
+        key: 'username'
     },
     {
-        title: '模型分数',
-        dataIndex: 'address',
-        key: 'address',
+        title: '提交图片',
+        dataIndex: 'image_paths',
+        key: 'image_paths',
     },
     {
-        title: '标签',
-        key: 'tags',
-        dataIndex: 'tags',
+        title: '分数',
+        dataIndex: 'score',
+        key: 'score',
     },
     {
         title: '操作',
-        key: 'action',
-    },
-];
-const data = [
-    {
-        key: '1',
-        name: 'John Brown',
-        age: '<a-image :width="100" src="https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png" />',
-        address: 'New York No. 1 Lake Park',
-        tags: ['nice', 'developer'],
-    },
-    {
-        key: '2',
-        name: 'Jim Green',
-        age: 42,
-        address: 'London No. 1 Lake Park',
-        tags: ['loser'],
-    },
-    {
-        key: '3',
-        name: 'Joe Black',
-        age: 32,
-        address: 'Sidney No. 1 Lake Park',
-        tags: ['cool', 'teacher'],
-    },
-    {
-        key: '2',
-        name: 'Jim Green',
-        age: 42,
-        address: 'London No. 1 Lake Park',
-        tags: ['loser'],
-    },
-    {
-        key: '3',
-        name: 'Joe Black',
-        age: 32,
-        address: 'Sidney No. 1 Lake Park',
-        tags: ['cool', 'teacher'],
-    },
-    {
-        key: '2',
-        name: 'Jim Green',
-        age: 42,
-        address: 'London No. 1 Lake Park',
-        tags: ['loser'],
-    },
-
+        dataIndex: 'action',
+        key: 'action'
+    }
 ];
 
+const viewDetails = (record) => {
+  // 使用编程式导航跳转到详情页，并传递 id 参数
+  router.push({ path: `/teacher/testPaperDetails/${ route.params.paperId }/${ record.key }` })
+};
+
+
+// 数据数组，初始化为空
+const data = ref([]);
+
+// 在组件挂载后调用接口
+onMounted(async () => {
+    try {
+        const response = await axios.post('/api/teacher/getAllStu', {
+            "username": webStore.info.userName,
+            "token": webStore.info.token,
+            "paperId": route.params.paperId
+        });
+        // 假设response.data是你要的数据数组
+        data.value = Object.values(response.data).map((item) => ({
+            key: item.id.toString(), // 将id转换为字符串，确保key是唯一的
+            name: item.name, // 使用student作为姓名，因为name字段为null
+            username: item.student,
+            image_paths: `/api${item.image_paths}`,
+            score: item.score,
+        }));
+    } catch (error) {
+        console.error('Fetching data failed:', error);
+    }
+});
 </script>

@@ -61,6 +61,11 @@ const routes = [
         meta: {breadcrumb: '试卷详情'}
       },
       {
+        path: 'testPaperDetails/:paperId/:id',
+        component: import('@/views/teacher/testPaper/testPaperDetailsSingal.vue'),
+        meta: {breadcrumb: '模型评阅详情'}
+      },
+      {
         path: 'studentScoreData',
         component: import('@/views/teacher/studentManage/studentScoreData.vue'),
         meta: {breadcrumb: '成绩统计'}
