@@ -27,11 +27,8 @@ onMounted(() => {
 
 const getData = () => {
     const info = reactive({
-        // username: webStore.info.userName,
-        // token: webStore.info.token
-
-        username: "zhang",
-        token:"123"
+        username: webStore.info.userName,
+        token: webStore.info.token
     })
     axios.post("/api/student/getStuGrades", info)
         .then(response => {

@@ -26,8 +26,8 @@
                         <span>考试列表</span>
                         <router-link to="/student/testPaperList" />
                     </a-menu-item>
-                    <a-menu-item key="4">null</a-menu-item>
-                    <a-menu-item key="5">null</a-menu-item>
+                    <!-- <a-menu-item key="4">null</a-menu-item>
+                    <a-menu-item key="5">null</a-menu-item> -->
                 </a-sub-menu>
                 <a-menu-item key="6">
                     <router-link to="/student/data" />
