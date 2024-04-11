@@ -19,30 +19,47 @@
             </template>
             <template v-else-if="column.key === 'action'">
                 <span>
-                    <a @click="sendEmail(record)">修改分数</a>
-                    <a-divider type="vertical" />
-                    <a @click="showGrade(record)">修改评语</a>
+                    <a @click="modify(record)">修改分数和评语</a>
                 </span>
             </template>
         </template>
     </a-table>
+    <a-back-top />
+    <!-- 修改分数和评语对话框 -->
+    <a-modal v-model:open="modifyOpen" title="修改分数和评语" :confirm-loading="confirmLoading" @ok="handleModifyConfirm">
+        <div style="display: flex; flex-direction: row;">
+            <a-textarea v-model:value="teacherComment" placeholder="请输入评语" auto-size style="flex: 1;" />
+            <a-textarea v-model:value="teacherGrade" placeholder="请输入分数" auto-size style="width: 100px;" />
+        </div>
+
+    </a-modal>
+
 </template>
 
 <script setup>
 import { ref, onMounted } from 'vue';
 import axios from 'axios';
 import { useRoute } from 'vue-router';
+import { message } from 'ant-design-vue';
 import { useWebStore } from '@/stores/web.js';
 
 const data = ref([]);
 const webStore = useWebStore();
 const route = useRoute();
 
+const selectedRecord = ref(null);
+const modifyOpen = ref(false);
+const confirmLoading = ref(false);
+const teacherComment = ref('');
+const teacherGrade = ref('');
+
+
 const columns = [
     {
         title: '题号',
         dataIndex: 'questionId',
         key: 'questionId',
+        width: '6%',
     },
     {
         title: '题目图片',
@@ -53,6 +70,7 @@ const columns = [
         title: '模型分数',
         dataIndex: 'score',
         key: 'score',
+        width: '10%',
     },
     {
         title: '模型评语',
@@ -62,6 +80,7 @@ const columns = [
     {
         title: '操作',
         key: 'action',
+        width: '12%',
     },
 ];
 
@@ -69,19 +88,19 @@ onMounted(async () => {
     try {
         // 示例API请求，请替换为实际的API URL
         const response = await axios.post('/api/teacher/getStuQuestionScore', {
-            username: "zh",
-            token: "123",
-            stuUsername: "zhang",
-            paperId: "10"
+            username: webStore.info.userName,
+            token: webStore.info.token,
+            stuUsername: route.params.username,
+            paperId: route.params.paperId
         });
         // 假设responseData就是响应数据
         const responseData = response.data;
 
         const processedData = Object.keys(responseData.image_paths).map((key, index) => ({
-            questionId: index + 1,
+            questionId: index ,
             image_paths: [`/api/${responseData.image_paths[key]}`],
-            score: responseData.questionScore.find(q => q.question === index + 1)?.score || '',
-            parse: responseData.questionScore.find(q => q.question === index + 1)?.parse || '',
+            score: responseData.questionScore.find(q => q.question === index )?.score || '',
+            parse: responseData.questionScore.find(q => q.question === index )?.parse || '',
         }));
 
         data.value = processedData;
@@ -90,11 +109,45 @@ onMounted(async () => {
     }
 });
 
-function sendEmail(record) {
-    // 实现发送邮件的逻辑
-}
+const modify = (record) => {
+    teacherComment.value='',
+    teacherGrade.value='',
+    selectedRecord.value = record; // 保存当前记录
+    console.log(record)
+    modifyOpen.value = true;
+};
 
-function showGrade(record) {
-    // 实现显示成绩详情的逻辑
-}
+const handleModifyConfirm = () => {
+
+    const requestData = {
+        username: webStore.info.userName,
+        token: webStore.info.token,
+        teacherComment: teacherComment.value,
+        teacherGrade: teacherGrade.value,
+        paperId: route.params.paperId,
+        stuUsername: route.params.username,
+        question: selectedRecord.value.questionId.toString()
+    };
+
+    confirmLoading.value = true;
+
+    axios.post('/api/teacher/setStuQuestionScore', requestData)
+        .then(response => {
+            if (response.data.code === 200) {
+                // 处理响应
+                message.success("修改成功!");
+                sendEmailOpen.value = false; // 这里确保关闭对话框
+            }
+
+        })
+        .catch(error => {
+            // 处理错误
+            
+            modifyOpen.value = false;
+        })
+        .finally(() => {
+            confirmLoading.value = false; // 停止加载动画
+        });
+};
+
 </script>

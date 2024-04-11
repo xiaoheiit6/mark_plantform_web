@@ -9,11 +9,7 @@
                     <PieChartOutlined />
                     <span>历史数据</span>
                 </a-menu-item>
-                <a-menu-item key="2">
-                    <router-link to="/teacher/success" />
-                    <CommentOutlined />
-                    <span>成功页面</span>
-                </a-menu-item>
+                
                 <a-sub-menu key="sub1">
                     <template #title>
                         <span>
@@ -28,9 +24,6 @@
                     <a-menu-item key="4">
                         <span>试卷管理</span>
                         <router-link to="/teacher/testPaperList" />
-                    </a-menu-item>
-                    <a-menu-item key="5">
-                        <span>试卷批阅</span>
                     </a-menu-item>
                 </a-sub-menu>
                 <a-sub-menu key="sub2">

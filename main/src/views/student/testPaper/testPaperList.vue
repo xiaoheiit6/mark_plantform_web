@@ -153,7 +153,12 @@ const showModal = (record) => {
 
 // 点击OK
 const handleOk = () => {
+  axios.post('/api/student/marking',{
+    username: webStore.info.userName,
+    paperId: selectedKey.value.toString()
+  })
   isModalVisible.value = false;
+  router.go(0);
 };
 
 // 点击取消

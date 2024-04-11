@@ -23,8 +23,7 @@
             <template v-else-if="column.key === 'action'">
                 <span>
                     <a @click="viewDetails(record)">查看模型评阅详情</a>
-                    <a-divider type="vertical" />
-                    <a @click="showGarde(record)">查看成绩详情</a>
+                    
                 </span>
             </template>
 
@@ -74,7 +73,7 @@ const columns = [
 
 const viewDetails = (record) => {
   // 使用编程式导航跳转到详情页，并传递 id 参数
-  router.push({ path: `/teacher/testPaperDetails/${ route.params.paperId }/${ record.key }` })
+  router.push({ path: `/teacher/testPaperDetails/${ route.params.paperId }/${ record.key }/${ record.username }` })
 };
 
 

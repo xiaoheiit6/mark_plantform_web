@@ -18,7 +18,7 @@
 
             <template v-else-if="column.key === 'action'">
                 <span>
-                    <a @click="sendEmail(record)">下发邮件</a>
+                    <a @click="openSendEmailDialog(record)">下发邮件</a>
                     <a-divider type="vertical" />
                     <a @click="showGarde(record)">查看历史成绩</a>
                     <a-divider type="vertical" />
@@ -35,6 +35,14 @@
     <a-modal :open="open" title="成绩" @ok="handleOkGarde" @cancel="handleCancelGarde">
         <v-chart class="chart" :option="option" />
     </a-modal>
+
+    <!-- 下发邮件对话框 -->
+    <a-modal v-model:open="sendEmailOpen" title="下发内容" :confirm-loading="confirmLoading" @ok="handleSendEmailConfirm">
+        <a-textarea v-model:value="emailContent" placeholder="请输入邮件内容" auto-size />
+    </a-modal>
+
+
+
 </template>
 
 <script setup>
@@ -88,6 +96,11 @@ const columns = [
 ];
 const open = ref(false);
 
+const selectedRecord = ref(null);
+const sendEmailOpen = ref(false);
+const confirmLoading = ref(false);
+const emailContent = ref('');
+
 const data = ref();
 const data1 = ref([]);
 const data2 = ref([]);
@@ -125,6 +138,41 @@ onMounted(async () => {
         console.error(error);
     }
 });
+
+//邮件发送逻辑
+
+const openSendEmailDialog = (record) => {
+    selectedRecord.value = record; // 保存当前记录
+    sendEmailOpen.value = true;
+};
+
+
+const handleSendEmailConfirm = () => {
+    // 发送邮件的逻辑
+    const requestData = {
+        username: webStore.info.userName,
+        token: webStore.info.token,
+        message: emailContent.value, // 将邮件内容添加到请求数据中
+        recipient_email: selectedRecord.value.email
+    };
+
+    confirmLoading.value = true; // 开始加载动画
+
+    axios.post('/api/teacher/sendEmail', requestData)
+        .then(response => {
+            // 处理响应
+            message.success("邮件发送成功!");
+            sendEmailOpen.value = false; // 这里确保关闭对话框
+        })
+        .catch(error => {
+            // 处理错误
+            message.error("邮件发送失败，请重试!");
+            sendEmailOpen.value = false; // 确保即使失败也关闭对话框
+        })
+        .finally(() => {
+            confirmLoading.value = false; // 停止加载动画
+        });
+};
 
 
 // 处理查看成绩的逻辑

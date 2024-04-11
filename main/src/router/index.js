@@ -8,10 +8,6 @@ const routes = [
     meta: { requiresAuth: true },
   },
   {
-    path: '/route',
-    component: () => import('@/views/test/route.vue')
-  },
-  {
     path: '/login',
     component: () => import('@/views/login/index.vue'),
     meta: { title: '登录' }
@@ -34,11 +30,7 @@ const routes = [
         component: import('@/views/teacher/data.vue'),
         meta: {breadcrumb: '数据分析'}
       },
-      {
-        path: 'success',
-        component: import('@/views/teacher/success.vue'),
-        meta: {breadcrumb: '成功页面'}
-      },
+      
       {
         path: 'studentList',
         component: import('@/views/teacher/studentManage/studentList.vue'),
@@ -61,7 +53,7 @@ const routes = [
         meta: {breadcrumb: '试卷详情'}
       },
       {
-        path: 'testPaperDetails/:paperId/:id',
+        path: 'testPaperDetails/:paperId/:id/:username',
         component: import('@/views/teacher/testPaper/testPaperDetailsSingal.vue'),
         meta: {breadcrumb: '模型评阅详情'}
       },
@@ -111,23 +103,10 @@ const routes = [
   },
 
   {
-    path: '/test',
-    name: 'test',
-    meta: { requiresAuth: true },
-    component: () => import('@/views/test/test.vue')
-  },
-  {
     path: '/echarts',
     component: () => import('@/views/test/echarts.vue')
   },
-  {
-    path: '/table',
-    component: () => import('@/views/test/table.vue')
-  },
-  {
-    path: '/img',
-    component: () => import('@/views/test/img.vue')
-  }
+  
 ]
 
 const router = createRouter({
