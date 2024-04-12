@@ -5,7 +5,7 @@
       <div class="loginbox">
         <a-form :model="formState" name="normal_login" class="login-form" @finish="onFinish"
           @finishFailed="onFinishFailed">
-          <h1 class="title-center">山水诗画</h1>
+          <h1 class="title-center">文心智评</h1>
           <a-form-item label="账号" name="username" :rules="[{ required: true, message: '请输入你的用户名!' }]">
             <a-input v-model:value="formState.username">
               <template #prefix>
@@ -28,7 +28,7 @@
             <a-radio value="2">老师</a-radio>
           </a-radio-group>
           <a-form-item class="center">
-            <a-button :disabled="disabled" type="primary" html-type="submit" class="login-form-button" @click="login">
+            <a-button :disabled="disabled" type="primary" html-type="submit" class="login-form-button" @click="login" >
               登录
             </a-button>
             或者
@@ -207,10 +207,7 @@ const boxStyle = {
   justify-content: center;
 }
 
-/* 登录按键字体的大小 */
-.login-form-button {
-  font-size: 18px;
-}
+
 
 /* form表单里div的下边距 */
 .ant-form-item {

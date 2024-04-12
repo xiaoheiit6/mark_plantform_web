@@ -1,10 +1,31 @@
 <template>
     <a-table :columns="columns" :data-source="data">
         <template #headerCell="{ column }">
+            <template v-if="column.key === 'paperId'">
+                <span>
+                    <FieldNumberOutlined />
+                    试卷ID
+                </span>
+            </template>
+
+
             <template v-if="column.key === 'paperName'">
                 <span>
-                    <smile-outlined />
+                    <FileOutlined />
                     试卷
+                </span>
+            </template>
+            <template v-if="column.key === 'description'">
+                <span>
+                    <TagOutlined />
+                    试卷描述
+                </span>
+            </template>
+            
+            <template v-if="column.key === 'action'">
+                <span>
+                    <ToolOutlined />
+                    操作
                 </span>
             </template>
         </template>
@@ -12,11 +33,13 @@
         <template #bodyCell="{ column, record }">
             <template v-if="column.key === 'paperName'">
                 <span>
+                    
                     {{ record.paperName }}
                 </span>
             </template>
             <template v-else-if="column.key === 'description'">
                 <span>
+                    
                     {{ record.description }}
                 </span>
             </template>
@@ -27,7 +50,7 @@
                     <a-divider type="vertical" /> -->
                     <a @click="viewDetails(record)">查看详情</a>
                     <a-divider type="vertical" />
-                    <a @click="showGarde(record)">查看成绩</a>
+                    <a @click="showGarde(record)">查看成绩分布</a>
                     <a-divider type="vertical" />
                     <a @click="exportGrade(record)">导出数据</a>
                     <a-divider type="vertical" />
@@ -42,28 +65,36 @@
     </a-table>
 
     <!-- 成绩对话框 -->
-    <a-modal :open="open" title="成绩" @ok="handleOkGarde" @cancel="handleCancelGarde">
-        <p>Some contents...</p>
-        <p>Some contents...</p>
-        <p>Some contents...</p>
+    <a-modal :open="open" title="成绩分布" @ok="handleOkGarde" @cancel="handleCancelGarde">
+        <v-chart class="chart" :option="option" />
     </a-modal>
 </template>
 
 <script setup>
-import { ref, reactive, onMounted } from 'vue';
+import { ref, reactive, onMounted, computed } from 'vue';
 import { message } from 'ant-design-vue';
 import axios from 'axios';
-import { SmileOutlined } from '@ant-design/icons-vue';
+import { FileOutlined, FieldNumberOutlined, TagOutlined,ToolOutlined } from '@ant-design/icons-vue';
 import { useWebStore } from '@/stores/web.js';
 import { useRouter } from 'vue-router';
+
+import VChart, { THEME_KEY } from "vue-echarts";
+import { use } from 'echarts/core'
+import { BarChart } from 'echarts/charts'
+import { GridComponent } from 'echarts/components'
+import { CanvasRenderer } from 'echarts/renderers'
+use([GridComponent, BarChart, CanvasRenderer])
 
 const router = useRouter();
 // 使用WebStore
 const webStore = useWebStore();
 const selectedKey = ref('');
 const open = ref(false);
+const chartDataX1 = ref([]);
+const chartDataY1 = ref([]);
 
-// 表格列的定义
+
+ // 表格列的定义
 const columns = reactive([
     {
         title: '试卷ID',
@@ -153,9 +184,42 @@ onMounted(fetchPapers);
 // 处理查看成绩的逻辑
 const showGarde = (record) => {
     selectedKey.value = record.key;
-    console.log(record.key);
+
+    axios.post('/api/teacher/average',{
+        username: webStore.info.userName,
+        token: webStore.info.token,
+        paperId: selectedKey.value
+    }).then(response => {
+        const responseData = response.data;
+        chartDataX1.value = Object.keys(responseData.distribution); // 提取 x 轴数据
+        chartDataY1.value = Object.values(responseData.distribution); // 提取柱状图数据
+        
+        
+    }).catch(error => {
+        console.error('获取成绩数据时发生错误:', error);
+    });
+
     open.value = true;
 };
+
+
+const option = computed(() =>{
+    return {
+        xAxis: {
+            type: 'category',
+            data: chartDataX1.value
+        },
+        yAxis: {
+            type: 'value'
+        },
+        series: [
+            {
+                data: chartDataY1.value,
+                type: 'bar'
+            }
+        ]
+    }
+})
 
 const handleOkGarde = () => {
     open.value = false;
@@ -191,11 +255,16 @@ const deletePaper = async (paperId) => {
     }
 }
 
-
-
 //点击确定删除时函数
 const confirmDelete = (record) => {
     deletePaper(record.paperId.toString());
 };
 
 </script>
+
+<style scoped>
+.chart {
+    height: 350px;
+    width: 500px;
+}
+</style>

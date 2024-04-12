@@ -2,10 +2,37 @@
     <a-table :columns="columns" :data-source="data">
         <template #headerCell="{ column }">
             <template v-if="column.key === 'name'">
+                <FieldStringOutlined />
                 <span>
                     姓名
                 </span>
             </template>
+            <template v-if="column.key === 'username'">
+                <FieldNumberOutlined />
+                <span>
+                    用户名
+                </span>
+            </template>
+            
+            <template v-if="column.key === 'image_paths'">
+                <PictureOutlined />
+                <span>
+                    提交图片
+                </span>
+            </template>
+            <template v-if="column.key === 'score'">
+                <BarChartOutlined />
+                <span>
+                    成绩
+                </span>
+            </template>
+            <template v-if="column.key === 'action'">
+                <ToolOutlined />
+                <span>
+                    操作
+                </span>
+            </template>
+            
         </template>
 
         <template #bodyCell="{ column, record }">
@@ -36,6 +63,7 @@ import { ref, onMounted } from 'vue';
 import axios from 'axios'; // 确保你已经安装并导入了axios
 import { useRoute, useRouter } from 'vue-router';
 import { useWebStore } from '@/stores/web.js';
+import { FieldStringOutlined, FieldNumberOutlined, PictureOutlined, BarChartOutlined, ToolOutlined } from '@ant-design/icons-vue';
 
 const webStore = useWebStore();
 const route = useRoute();

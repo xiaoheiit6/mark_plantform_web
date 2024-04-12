@@ -21,10 +21,7 @@ const routes = [
     component: () => import('@/views/teacher/index.vue'),
     meta: { requiresAuth: true, breadcrumb: '教师端' },
     children: [
-      {
-        path: 'info',
-        component: import('@/views/teacher/info.vue')
-      },
+      
       {
         path: 'data',
         component: import('@/views/teacher/data.vue'),
@@ -74,11 +71,6 @@ const routes = [
     component: () => import('@/views/student/index.vue'),
     meta: { requiresAuth: true, breadcrumb: '学生端' },
     children: [
-      {
-        path: 'info',
-        component: import('@/views/student/info.vue')
-        
-      },
       {
         path: 'data',
         component: import('@/views/student/data.vue'),

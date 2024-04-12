@@ -14,26 +14,11 @@
                     <UserOutlined />
                     <span>智能问答</span>
                 </a-menu-item>
-
-                <a-sub-menu key="sub1">
-                    <template #title>
-                        <span>
-                            <user-outlined />
-                            <span>考试</span>
-                        </span>
-                    </template>
-                    <a-menu-item key="3">
+                <a-menu-item key="3">
+                    <user-outlined />
                         <span>考试列表</span>
                         <router-link to="/student/testPaperList" />
                     </a-menu-item>
-                    <!-- <a-menu-item key="4">null</a-menu-item>
-                    <a-menu-item key="5">null</a-menu-item> -->
-                </a-sub-menu>
-                <a-menu-item key="6">
-                    <router-link to="/student/data" />
-                    <PieChartOutlined />
-                    <span>个人信息</span>
-                </a-menu-item>
 
 
             </a-menu>
@@ -44,11 +29,7 @@
                     <a-dropdown>
                         <template #overlay>
                             <a-menu @click="handleMenuClick">
-                                <a-menu-item key="1">
-                                    <router-link to="/student/info" />
-                                    <UserOutlined />
-                                    个人信息
-                                </a-menu-item>
+                                
                                 <a-menu-item @click="logout">
                                     <LogoutOutlined />
                                     退出

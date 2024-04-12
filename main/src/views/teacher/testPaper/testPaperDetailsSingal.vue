@@ -43,6 +43,7 @@ import { useRoute } from 'vue-router';
 import { message } from 'ant-design-vue';
 import { useWebStore } from '@/stores/web.js';
 
+
 const data = ref([]);
 const webStore = useWebStore();
 const route = useRoute();

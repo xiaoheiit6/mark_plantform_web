@@ -13,15 +13,17 @@
                 <a-sub-menu key="sub1">
                     <template #title>
                         <span>
-                            <user-outlined />
+                            <FileOutlined />
                             <span>试卷</span>
                         </span>
                     </template>
                     <a-menu-item key="3">
+                        <FileAddOutlined />
                         <span>新试卷设计</span>
                         <router-link to="/teacher/addTestPaper" />
                     </a-menu-item>
                     <a-menu-item key="4">
+                        <FileSyncOutlined />
                         <span>试卷管理</span>
                         <router-link to="/teacher/testPaperList" />
                     </a-menu-item>
@@ -34,6 +36,7 @@
                         </span>
                     </template>
                     <a-menu-item key="6">
+                        <UsergroupAddOutlined />
                         <span>学生管理</span>
                         <router-link to="/teacher/studentList" />
                     </a-menu-item>
@@ -55,11 +58,7 @@
                     <a-dropdown>
                         <template #overlay>
                             <a-menu @click="handleMenuClick">
-                                <a-menu-item key="1">
-                                    <UserOutlined />
-                                    <router-link to="/teacher/info" />
-                                    个人信息
-                                </a-menu-item>
+                                
                                 <a-menu-item key="2" @click="logout">
                                     <LogoutOutlined />
                                     退出
@@ -95,7 +94,7 @@
 
 <script setup>
 import { reactive, ref, computed } from 'vue';
-import { PieChartOutlined, TeamOutlined, CommentOutlined, UserOutlined, CloudUploadOutlined, LogoutOutlined } from '@ant-design/icons-vue';
+import { PieChartOutlined, TeamOutlined, FileAddOutlined, UserOutlined, FileOutlined, LogoutOutlined, FileSyncOutlined, UsergroupAddOutlined } from '@ant-design/icons-vue';
 import { useWebStore } from '@/stores/web.js';
 import axios from 'axios';
 import { message } from 'ant-design-vue';

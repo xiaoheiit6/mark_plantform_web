@@ -175,10 +175,7 @@ const login = () => {
   justify-content: center;
 }
 
-/* 登录按键字体的大小 */
-.login-form-button {
-  font-size: 18px;
-}
+
 
 /* form表单里div的下边距 */
 .ant-form-item {
