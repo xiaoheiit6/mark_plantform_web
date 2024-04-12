@@ -7,6 +7,32 @@
           试卷
         </span>
       </template>
+      <template v-if="column.key === 'description'">
+        <span>
+          <BulbOutlined />
+          试卷描述
+        </span>
+      </template>
+      <template v-if="column.key === 'score'">
+        <span>
+          <FundProjectionScreenOutlined />
+          分数
+        </span>
+      </template>
+      <template v-if="column.key === 'submission'">
+        <span>
+          <ToTopOutlined />
+          上传状态
+        </span>
+      </template>
+      <template v-if="column.key === 'action'">
+        <span>
+          <ToolOutlined />
+          操作
+        </span>
+      </template>
+
+
     </template>
 
     <template #bodyCell="{ column, record }">
@@ -31,8 +57,7 @@
       <template v-else-if="column.key === 'action'">
         <span>
           <a @click="viewDetails(record)">查看详情</a>
-          <a-divider type="vertical" />
-          <a @click="showGrade(record)">查看成绩</a>
+          
           <a-divider type="vertical" />
           <a @click="showModal(record)">上传</a>
         </span>
@@ -40,10 +65,7 @@
     </template>
   </a-table>
 
-  <!-- 成绩对话框 -->
-  <a-modal :open="open" title="成绩" @ok="handleOkGrade" @cancel="handleCancelGrade">
-    <p>Some contents...</p>
-  </a-modal>
+  
 
   <!-- Modal 对话框 -->
   <a-modal title="上传文件" :visible="isModalVisible" @ok="handleOk" @cancel="handleCancel">
@@ -64,7 +86,7 @@
 import { ref, reactive, onMounted, computed } from 'vue';
 import axios from 'axios';
 import { message } from 'ant-design-vue';
-import { FolderAddTwoTone, SmileOutlined } from '@ant-design/icons-vue';
+import { FolderAddTwoTone, SmileOutlined, BulbOutlined, FundProjectionScreenOutlined, ToTopOutlined, ToolOutlined } from '@ant-design/icons-vue';
 import { useWebStore } from '@/stores/web.js';
 import { useRouter } from 'vue-router';
 
@@ -131,19 +153,6 @@ const fetchData = async () => {
   }
 };
 
-// 显示成绩
-const showGrade = (record) => {
-  selectedKey.value = record.paperId;
-  open.value = true;
-};
-
-const handleOkGrade = () => {
-  open.value = false;
-};
-
-const handleCancelGrade = () => {
-  open.value = false;
-};
 
 // 显示上传模态框
 const showModal = (record) => {

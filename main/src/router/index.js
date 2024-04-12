@@ -10,86 +10,87 @@ const routes = [
   {
     path: '/login',
     component: () => import('@/views/login/index.vue'),
-    meta: { title: '登录' }
+    meta: { title: '登录-文心智评' }
   },
   {
     path: '/register',
-    component: () => import('@/views/register/index.vue')
+    component: () => import('@/views/register/index.vue'),
+    meta: { title: '注册-文心智评' }
   },
   {
     path: '/teacher',
     component: () => import('@/views/teacher/index.vue'),
-    meta: { requiresAuth: true, breadcrumb: '教师端' },
+    meta: { requiresAuth: true, breadcrumb: '教师端',title: '教师-文心智评'  },
     children: [
       
       {
         path: 'data',
         component: import('@/views/teacher/data.vue'),
-        meta: {breadcrumb: '数据分析'}
+        meta: {breadcrumb: '数据分析',title: '数据分析-文心智评' }
       },
       
       {
         path: 'studentList',
         component: import('@/views/teacher/studentManage/studentList.vue'),
-        meta: {breadcrumb: '学生列表'}
+        meta: {breadcrumb: '学生列表',title: '学生列表-文心智评' }
       },
       {
         path: 'testPaperList',
         component: import('@/views/teacher/testPaper/testPaperList.vue'),
-        meta: {breadcrumb: '试卷列表'}
+        meta: {breadcrumb: '试卷列表',title: '试卷列表-文心智评'}
       },
       {
         path: 'addTestPaper',
         component: import('@/views/teacher/testPaper/addTestPaper.vue'),
-        meta: {breadcrumb: '新建试卷'}
+        meta: {breadcrumb: '新建试卷' ,title: '新建试卷-文心智评'}
 
       },
       {
         path: "testPaperDetails/:paperId",
         component: import('@/views/teacher/testPaper/testPaperDetails.vue'),
-        meta: {breadcrumb: '试卷详情'}
+        meta: {breadcrumb: '试卷详情',title: '试卷详情-文心智评'}
       },
       {
         path: 'testPaperDetails/:paperId/:id/:username',
         component: import('@/views/teacher/testPaper/testPaperDetailsSingal.vue'),
-        meta: {breadcrumb: '模型评阅详情'}
+        meta: {breadcrumb: '模型评阅详情',title: '评阅详情-文心智评'}
       },
       {
         path: 'studentScoreData',
         component: import('@/views/teacher/studentManage/studentScoreData.vue'),
-        meta: {breadcrumb: '成绩统计'}
+        meta: {breadcrumb: '成绩统计',title: '成绩统计-文心智评'}
       },
       {
         path: 'studentScoreAnalysis',
         component: import('@/views/teacher/studentManage/studentScoreAnalysis.vue'),
-        meta: {breadcrumb: '成绩分析'}
+        meta: {breadcrumb: '成绩分析',title: '成绩分析-文心智评'}
       }
     ]
   },
   {
     path: '/student',
     component: () => import('@/views/student/index.vue'),
-    meta: { requiresAuth: true, breadcrumb: '学生端' },
+    meta: { requiresAuth: true, breadcrumb: '学生端',title: '学生-文心智评' },
     children: [
       {
         path: 'data',
         component: import('@/views/student/data.vue'),
-        meta: {breadcrumb: '数据分析'}
+        meta: {breadcrumb: '数据分析',title: '数据分析-文心智评'}
       },
       {
         path: 'chat',
         component: import('@/views/student/chat.vue'),
-        meta: {breadcrumb: '智能问答'}
+        meta: {breadcrumb: '智能问答',title: '智能问答-文心智评'}
       },
       {
         path: 'testPaperList',
         component: import('@/views/student/testPaper/testPaperList.vue'),
-        meta: {breadcrumb: '试卷列表'}
+        meta: {breadcrumb: '试卷列表',title: '试卷列表-文心智评'}
       },
       {
         path: 'testPaperDetails/:paperId',
         component: import('@/views/student/testPaper/testPaperDetails.vue'),
-        meta: {breadcrumb: '试卷详情'}
+        meta: {breadcrumb: '试卷详情',title: '试卷详情-文心智评'}
       }
     ]
   },
@@ -109,7 +110,7 @@ const router = createRouter({
 // 使用全局前置守卫来检查用户是否已登录
 router.beforeEach((to, from, next) => {
   //设置每个页面的title
-  document.title = to.meta.title || '智能阅卷平台'
+  document.title = to.meta.title || '文心智评'
 
   if (to.path === '/student') {
     return next('/student/data'); // 使用return确保不会继续执行后面的代码
@@ -148,6 +149,5 @@ function isLoggedIn() {
   //return true
 
 }
-
 
 export default router

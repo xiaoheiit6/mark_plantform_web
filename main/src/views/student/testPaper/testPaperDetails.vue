@@ -3,9 +3,29 @@
         <template #headerCell="{ column }">
             <template v-if="column.key === 'questionId'">
                 <span>
+                    <FieldNumberOutlined />
                     题号
                 </span>
             </template>
+            <template v-if="column.key === 'image_paths'">
+                <span>
+                    <PictureOutlined />
+                    图片
+                </span>
+            </template>
+            <template v-if="column.key === 'score'">
+                <span>
+                    <TrophyOutlined />
+                    分数
+                </span>
+            </template>
+            <template v-if="column.key === 'parse'">
+                <span>
+                    <CommentOutlined />
+                    评语
+                </span>
+            </template>
+            
         </template>
 
         <template #bodyCell="{ column, record }">
@@ -30,7 +50,7 @@ import { ref, onMounted } from 'vue';
 import axios from 'axios'; // 确保你已经安装并导入了axios
 import { useRoute, useRouter } from 'vue-router';
 import { useWebStore } from '@/stores/web.js';
-
+import { FieldNumberOutlined, PictureOutlined, TrophyOutlined, CommentOutlined } from '@ant-design/icons-vue';
 const webStore = useWebStore();
 const route = useRoute();
 const router = useRouter();
@@ -42,7 +62,7 @@ const columns = [
         title: '题号',
         dataIndex: 'questionId',
         key: 'questionId',
-        width: '6%',
+        width: '8%',
     },
     {
         title: '图片',
@@ -53,7 +73,7 @@ const columns = [
         title: '分数',
         dataIndex: 'score',
         key: 'score',
-        width: '6%',
+        width: '8%',
     },
     {
         title: '评语',
