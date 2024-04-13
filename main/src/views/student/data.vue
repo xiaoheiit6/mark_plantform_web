@@ -20,9 +20,11 @@ use([GridComponent, LineChart, CanvasRenderer, TitleComponent, TooltipComponent,
 
 const data1 = ref([]);
 const data2 = ref([]);
+const pieData = ref([]);
 
 onMounted(() => {
-    getData()
+    getData();
+    getPieData(); 
 })
 
 const getData = () => {
@@ -62,6 +64,20 @@ const getData = () => {
 
 }
 
+const getPieData = () => {
+    axios.post("/api/student/getLastPaper", {
+        username: webStore.info.userName  // Change as necessary based on your authentication scheme
+    }).then(response => {
+        const questionScores = response.data.questionScore.map(item => ({
+            value: parseInt(item.score), // Ensure numeric value
+            name: `问题 ${item.question}`
+        }));
+        pieData.value = questionScores;
+    }).catch(error => {
+        console.log(error);
+    });
+}
+
 const option = computed(() => {
     return {
         title: {
@@ -89,29 +105,20 @@ const option = computed(() => {
 const option2 = computed(() => {
     return {
         title: {
-            text: '饼图',
-            subtext: 'Fake Data',
+            text: '分数分布情况',
+            subtext: '最新试卷分数',
             left: 'center'
         },
         tooltip: {
             trigger: 'item'
         },
-        legend: {
-            orient: 'vertical',
-            left: 'left'
-        },
+        
         series: [
             {
-                name: 'Access From',
+                name: '分数分布',
                 type: 'pie',
                 radius: '50%',
-                data: [
-                    { value: 1048, name: '搜索引擎' },
-                    { value: 735, name: '直链' },
-                    { value: 580, name: '邮件' },
-                    { value: 484, name: '基本广告' },
-                    { value: 300, name: '视频广告' }
-                ],
+                data: pieData.value,
                 emphasis: {
                     itemStyle: {
                         shadowBlur: 10,
@@ -128,7 +135,8 @@ const option2 = computed(() => {
 
 <style scoped>
 .chart {
-    height: 400px;
-    width: 500px;
+    height: 450px;
+    width: 550px;
+    margin: 10px;
 }
 </style>

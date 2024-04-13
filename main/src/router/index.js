@@ -56,15 +56,11 @@ const routes = [
         meta: {breadcrumb: '模型评阅详情',title: '评阅详情-文心智评'}
       },
       {
-        path: 'studentScoreData',
-        component: import('@/views/teacher/studentManage/studentScoreData.vue'),
-        meta: {breadcrumb: '成绩统计',title: '成绩统计-文心智评'}
+        path: 'chat',
+        component: import('@/views/teacher/chat.vue'),
+        meta: {breadcrumb: '智能助手',title: '智能助手-文心智评'}
       },
-      {
-        path: 'studentScoreAnalysis',
-        component: import('@/views/teacher/studentManage/studentScoreAnalysis.vue'),
-        meta: {breadcrumb: '成绩分析',title: '成绩分析-文心智评'}
-      }
+      
     ]
   },
   {

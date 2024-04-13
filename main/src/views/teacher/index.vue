@@ -40,15 +40,12 @@
                         <span>学生管理</span>
                         <router-link to="/teacher/studentList" />
                     </a-menu-item>
-                    <a-menu-item key="7">
-                        <span>成绩统计</span>
-                        <router-link to="/teacher/studentScoreData" />
-                    </a-menu-item>
-                    <a-menu-item key="8">
-                        <span>成绩分析</span>
-                        <router-link to="/teacher/studentScoreAnalysis" />
-                    </a-menu-item>
                 </a-sub-menu>
+                <a-menu-item key="7">
+                    <CommentOutlined />
+                        <span>智能助手</span>
+                        <router-link to="/teacher/chat" />
+                    </a-menu-item>
 
             </a-menu>
         </a-layout-sider>
@@ -94,7 +91,7 @@
 
 <script setup>
 import { reactive, ref, computed } from 'vue';
-import { PieChartOutlined, TeamOutlined, FileAddOutlined, UserOutlined, FileOutlined, LogoutOutlined, FileSyncOutlined, UsergroupAddOutlined } from '@ant-design/icons-vue';
+import { PieChartOutlined, TeamOutlined, FileAddOutlined, UserOutlined, FileOutlined, LogoutOutlined, FileSyncOutlined, UsergroupAddOutlined, CommentOutlined } from '@ant-design/icons-vue';
 import { useWebStore } from '@/stores/web.js';
 import axios from 'axios';
 import { message } from 'ant-design-vue';

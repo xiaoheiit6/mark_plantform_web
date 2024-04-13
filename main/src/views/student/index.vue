@@ -11,11 +11,11 @@
 
                 <a-menu-item key="2">
                     <router-link to="/student/chat" />
-                    <UserOutlined />
+                    <CommentOutlined />
                     <span>智能问答</span>
                 </a-menu-item>
                 <a-menu-item key="3">
-                    <user-outlined />
+                    <FileOutlined />
                         <span>考试列表</span>
                         <router-link to="/student/testPaperList" />
                     </a-menu-item>
@@ -29,7 +29,6 @@
                     <a-dropdown>
                         <template #overlay>
                             <a-menu @click="handleMenuClick">
-                                
                                 <a-menu-item @click="logout">
                                     <LogoutOutlined />
                                     退出
@@ -39,7 +38,6 @@
                         <a-avatar :size="small" src="/api/static/avatar/student.png">
                             <template #icon>
                                 <UserOutlined />
-
                             </template>
                         </a-avatar>
 
@@ -68,7 +66,7 @@
 import { useWebStore } from '@/stores/web.js';
 import { useRouter,useRoute } from 'vue-router';
 import { reactive, ref, computed } from 'vue';
-import { PieChartOutlined, UserOutlined, LogoutOutlined } from '@ant-design/icons-vue';
+import { PieChartOutlined, UserOutlined, LogoutOutlined, CommentOutlined, FileOutlined } from '@ant-design/icons-vue';
 import axios from 'axios';
 import { message } from 'ant-design-vue';
 

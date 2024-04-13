@@ -6,48 +6,86 @@
 </template>
 
 <script setup>
-
-import { ref, computed } from 'vue'
+import { ref, computed, onMounted } from 'vue'
 import { use } from 'echarts/core'
 import { LineChart, PieChart } from 'echarts/charts'
 import { GridComponent, TitleComponent, TooltipComponent, LegendComponent } from 'echarts/components'
 import { CanvasRenderer } from 'echarts/renderers'
 import VChart, { THEME_KEY } from "vue-echarts";
+import axios from 'axios';
 import { useWebStore } from '@/stores/web.js';
+
 const webStore = useWebStore()
 use([GridComponent, LineChart, CanvasRenderer, TitleComponent, TooltipComponent, LegendComponent, PieChart])
 
+// 创建响应式数据
+const chartData = ref({
+    xAxisData: [],
+    seriesData: []
+});
 
+// 在组件挂载后发起数据请求
+onMounted(() => {
+    fetchChartData();
+});
 
+// 请求数据函数
+const fetchChartData = async () => {
+    try {
+        const response = await axios.post("/api/teacher/paperAverage", {
+            username: "zh",
+            token: "123"
+        });
+        const paperAverage = response.data.paperAverage;
+        const xAxisData = [];
+        const seriesData = [];
+
+        // 遍历返回的数据对象
+        for (const key in paperAverage) {
+            xAxisData.push(`试卷 ${key}`);
+            seriesData.push(paperAverage[key]);
+        }
+
+        // 更新图表数据
+        chartData.value = {
+            xAxisData,
+            seriesData
+        };
+    } catch (error) {
+        console.error("请求数据失败:", error);
+    }
+};
+
+// 计算属性更新图表配置
 const option = computed(() => {
     return {
         title: {
-            text: '折线图',
-            subtext: 'Fake Data',
+            text: '试卷平均分分布',
+            subtext: '近期考试平均分',
             left: 'center'
         },
         xAxis: {
             type: 'category',
-            data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 's']
+            data: chartData.value.xAxisData
         },
         yAxis: {
             type: 'value'
         },
         series: [
             {
-                data: [820, 932, 901, 934, 1290, 130, 160],
+                data: chartData.value.seriesData,
                 type: 'line',
                 smooth: true
             }
         ]
     }
-})
+});
 
 const option2 = computed(() => {
     return {
         title: {
-            text: '饼图',
-            subtext: 'Fake Data',
+            text: '提交进度',
+            subtext: '学生试卷提交进度',
             left: 'center'
         },
         tooltip: {
@@ -59,15 +97,12 @@ const option2 = computed(() => {
         },
         series: [
             {
-                name: '来自：',
+                name: '试卷数：',
                 type: 'pie',
                 radius: '50%',
                 data: [
-                    { value: 1048, name: '搜索引擎' },
-                    { value: 735, name: '直链' },
-                    { value: 580, name: '邮件' },
-                    { value: 484, name: '基本广告' },
-                    { value: 300, name: '视频广告' }
+                    { value: 7, name: '已提交' },
+                    { value: 3, name: '未提交' }
                 ],
                 emphasis: {
                     itemStyle: {
@@ -79,13 +114,14 @@ const option2 = computed(() => {
             }
         ]
     }
-})
+});
 
 </script>
 
 <style scoped>
 .chart {
-    height: 400px;
-    width: 500px;
+    height: 450px;
+    width: 550px;
+    margin: 10px;
 }
 </style>
