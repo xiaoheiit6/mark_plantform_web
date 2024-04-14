@@ -8,17 +8,17 @@
                     <PieChartOutlined />
                     <span>分析</span>
                 </a-menu-item>
-
-                <a-menu-item key="2">
-                    <router-link to="/student/chat" />
-                    <CommentOutlined />
-                    <span>智能问答</span>
-                </a-menu-item>
                 <a-menu-item key="3">
                     <FileOutlined />
                         <span>考试列表</span>
                         <router-link to="/student/testPaperList" />
                     </a-menu-item>
+                <a-menu-item key="2">
+                    <router-link to="/student/chat" />
+                    <CommentOutlined />
+                    <span>智能问答</span>
+                </a-menu-item>
+                
 
 
             </a-menu>

@@ -42,6 +42,7 @@ import axios from 'axios';
 import { useRoute } from 'vue-router';
 import { message } from 'ant-design-vue';
 import { useWebStore } from '@/stores/web.js';
+import router from '@/router';
 
 
 const data = ref([]);
@@ -137,7 +138,9 @@ const handleModifyConfirm = () => {
             if (response.data.code === 200) {
                 // 处理响应
                 message.success("修改成功!");
+                router.go(0);
                 sendEmailOpen.value = false; // 这里确保关闭对话框
+                
             }
 
         })

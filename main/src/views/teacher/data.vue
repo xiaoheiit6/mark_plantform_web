@@ -33,8 +33,8 @@ onMounted(() => {
 const fetchChartData = async () => {
     try {
         const response = await axios.post("/api/teacher/paperAverage", {
-            username: "zh",
-            token: "123"
+            username: webStore.info.userName,
+            token: webStore.info.token
         });
         const paperAverage = response.data.paperAverage;
         const xAxisData = [];

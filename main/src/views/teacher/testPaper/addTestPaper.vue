@@ -34,7 +34,7 @@
 
   <a-modal v-model:open="open" title="添加成功" @ok="handleOk">
     <a-result status="success" title="添加成功！"
-      sub-title="Order number:  Cloud server configuration takes 1-5 minutes, please wait.">
+      sub-title="">
       <template #extra>
         <!-- 额外操作按钮，如需要可在此处添加 -->
       </template>
@@ -87,7 +87,6 @@ const addQuestion = () => {
 
 const onFinish = values => {
   open.value = true;
-  message.success('添加试卷成功');
   axios.post("/api/teacher/creatPaper", dynamicValidateForm)
     .then(response => {
       if (response.data.code === 200) {

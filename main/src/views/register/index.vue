@@ -21,7 +21,7 @@
             </a-input-password>
 
           </a-form-item>
-          <a-form-item label="邮箱" name="emial" :rules="[{ required: true, message: '请输入你的邮箱!' }]">
+          <a-form-item label="邮箱" name="email" :rules="[{ required: true, message: '请输入你的邮箱!' }]">
             <a-input v-model:value="formState.email">
               <template #prefix>
                 <UserOutlined class="site-form-item-icon" />

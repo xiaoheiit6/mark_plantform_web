@@ -72,6 +72,7 @@ const getPieData = () => {
             value: parseInt(item.score), // Ensure numeric value
             name: `问题 ${item.question}`
         }));
+        console.log(questionScores)
         pieData.value = questionScores;
     }).catch(error => {
         console.log(error);
@@ -82,7 +83,7 @@ const option = computed(() => {
     return {
         title: {
             text: '成绩分布趋势',
-            subtext: 'Fake Data',
+            subtext: '分布趋势',
             left: 'center'
         },
         xAxis: {
