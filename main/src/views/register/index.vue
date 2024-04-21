@@ -63,7 +63,7 @@
 </template>
 
 <script setup>
-import axios from 'axios';
+import {http} from '@/lib/Http.js';
 import { message } from 'ant-design-vue';
 import { useWebStore } from '@/stores/web.js';
 import { useRouter } from 'vue-router';
@@ -99,7 +99,7 @@ const boxStyle = {
 
 //请求
 const login = () => {
-  axios.post('/api/auth/stuRegister', formState)
+  http.post('/auth/stuRegister', formState)
     .then(response => {
       if(response.data.code === 200){
         message.success("注册成功！请登录!")

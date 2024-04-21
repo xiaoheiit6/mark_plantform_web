@@ -43,12 +43,16 @@
 </template>
 
 <script setup>
-import axios from 'axios';
+import {http} from '@/lib/Http.js';
 import { message } from 'ant-design-vue';
 import { useWebStore } from '@/stores/web.js';
 import { reactive, computed, ref } from 'vue';
 import { useRouter } from 'vue-router';
+import { onMounted } from 'vue';
 
+onMounted(()=>{
+  console.log(222);
+})
 const webStore = useWebStore();
 const route = useRouter();
 const value = ref('1');
@@ -63,7 +67,7 @@ const formState = reactive({
 const login = async () => {
   try {
     if (value.value === "1") {
-      axios.post('/api/auth/stuLogin', formState)
+      http.post('/auth/stuLogin', formState)
         .then(response => {
           const code = response.data.code;
           if (code === 200) {
@@ -91,7 +95,7 @@ const login = async () => {
           });
         })
     } else {
-      axios.post('/api/auth/teacherLogin', formState)
+      http.post('/auth/teacherLogin', formState)
         .then(response => {
           const code = response.data.code;
           if (code === 200) {

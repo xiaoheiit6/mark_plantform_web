@@ -1,11 +1,14 @@
-import { createRouter, createWebHistory } from "vue-router";
+import { createRouter, createWebHashHistory, createWebHistory } from "vue-router";
 import { useWebStore } from "@/stores/web";
+import App from "@/App.vue";
+import { StudentChat, StudentData, StudentLayout, StudentTestPaperDetails, StudentTestPaperList } from "@/views/student";
+import { TeacherAddTestPaper, TeacherChat, TeacherData, TeacherLayout, TeacherManageStudentList, TeacherTestPaperDetails, TeacherTestPaperDetailsSingal, TeacherTestPaperList } from "@/views/teacher";
 
 const routes = [
   {
     path: '/',
-    component: () => import('@/App.vue'),
-    meta: { requiresAuth: true },
+    component: App,
+    // meta: { requiresAuth: true },
   },
   {
     path: '/login',
@@ -19,45 +22,45 @@ const routes = [
   },
   {
     path: '/teacher',
-    component: () => import('@/views/teacher/index.vue'),
-    meta: { requiresAuth: true, breadcrumb: '教师端',title: '教师-文心智评'  },
+    component: TeacherLayout,
+    meta: { requiresAuth: true, breadcrumb: '教师端', title: '教师-文心智评'  },
     children: [
       
       {
         path: 'data',
-        component: import('@/views/teacher/data.vue'),
+        component: TeacherData,
         meta: {breadcrumb: '数据分析',title: '数据分析-文心智评' }
       },
       
       {
         path: 'studentList',
-        component: import('@/views/teacher/studentManage/studentList.vue'),
+        component: TeacherManageStudentList,
         meta: {breadcrumb: '学生列表',title: '学生列表-文心智评' }
       },
       {
         path: 'testPaperList',
-        component: import('@/views/teacher/testPaper/testPaperList.vue'),
+        component: TeacherTestPaperList,
         meta: {breadcrumb: '试卷列表',title: '试卷列表-文心智评'}
       },
       {
         path: 'addTestPaper',
-        component: import('@/views/teacher/testPaper/addTestPaper.vue'),
+        component: TeacherAddTestPaper,
         meta: {breadcrumb: '新建试卷' ,title: '新建试卷-文心智评'}
 
       },
       {
         path: "testPaperDetails/:paperId",
-        component: import('@/views/teacher/testPaper/testPaperDetails.vue'),
+        component: TeacherTestPaperDetails,
         meta: {breadcrumb: '试卷详情',title: '试卷详情-文心智评'}
       },
       {
         path: 'testPaperDetails/:paperId/:id/:username',
-        component: import('@/views/teacher/testPaper/testPaperDetailsSingal.vue'),
+        component: TeacherTestPaperDetailsSingal,
         meta: {breadcrumb: '模型评阅详情',title: '评阅详情-文心智评'}
       },
       {
         path: 'chat',
-        component: import('@/views/teacher/chat.vue'),
+        component: TeacherChat,
         meta: {breadcrumb: '智能助手',title: '智能助手-文心智评'}
       },
       
@@ -65,36 +68,33 @@ const routes = [
   },
   {
     path: '/student',
-    component: () => import('@/views/student/index.vue'),
-    meta: { requiresAuth: true, breadcrumb: '学生端',title: '学生-文心智评' },
+    component: StudentLayout,
+    meta: { requiresAuth: true, breadcrumb: '学生端', title: '学生-文心智评' },
     children: [
       {
         path: 'data',
-        component: import('@/views/student/data.vue'),
+        component: StudentData,
         meta: {breadcrumb: '数据分析',title: '数据分析-文心智评'}
       },
       {
         path: 'chat',
-        component: import('@/views/student/chat.vue'),
+        component: StudentChat,
         meta: {breadcrumb: '智能问答',title: '智能问答-文心智评'}
       },
       {
         path: 'testPaperList',
-        component: import('@/views/student/testPaper/testPaperList.vue'),
+        component: StudentTestPaperList,
         meta: {breadcrumb: '试卷列表',title: '试卷列表-文心智评'}
       },
       {
         path: 'testPaperDetails/:paperId',
-        component: import('@/views/student/testPaper/testPaperDetails.vue'),
+        component: StudentTestPaperDetails,
         meta: {breadcrumb: '试卷详情',title: '试卷详情-文心智评'}
       }
     ]
   },
 
-  {
-    path: '/echarts',
-    component: () => import('@/views/test/echarts.vue')
-  },
+
   
 ]
 

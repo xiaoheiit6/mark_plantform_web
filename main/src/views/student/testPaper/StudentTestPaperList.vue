@@ -70,7 +70,7 @@
   <!-- Modal 对话框 -->
   <a-modal title="上传文件" :visible="isModalVisible" @ok="handleOk" @cancel="handleCancel">
     <a-upload-dragger v-model:fileList="fileList" name="file" :data="uploadData" :multiple="true"
-      action="/api/student/stuUpload" @change="handleChange" @drop="handleDrop">
+      action="/student/stuUpload" @change="handleChange" @drop="handleDrop">
       <p class="ant-upload-drag-icon">
         <FolderAddTwoTone />
       </p>
@@ -84,7 +84,7 @@
 
 <script setup>
 import { ref, reactive, onMounted, computed } from 'vue';
-import axios from 'axios';
+import {http} from '@/lib/Http.js';
 import { message } from 'ant-design-vue';
 import { FolderAddTwoTone, SmileOutlined, BulbOutlined, FundProjectionScreenOutlined, ToTopOutlined, ToolOutlined } from '@ant-design/icons-vue';
 import { useWebStore } from '@/stores/web.js';
@@ -141,7 +141,7 @@ onMounted(() => {
 
 const fetchData = async () => {
   try {
-    const response = await axios.post('/api/student/stuGetAllPaper', {
+    const response = await http.post('/student/stuGetAllPaper', {
       username: webStore.info.userName,
       token: webStore.info.token,
       
@@ -162,7 +162,7 @@ const showModal = (record) => {
 
 // 点击OK
 const handleOk = () => {
-  axios.post('/api/student/marking',{
+  http.post('/student/marking',{
     username: webStore.info.userName,
     paperId: selectedKey.value.toString()
   })

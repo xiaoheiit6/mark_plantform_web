@@ -47,7 +47,7 @@
 
 <script setup>
 import { ref, onMounted } from 'vue';
-import axios from 'axios'; // 确保你已经安装并导入了axios
+import {http} from '@/lib/Http.js';
 import { useRoute, useRouter } from 'vue-router';
 import { useWebStore } from '@/stores/web.js';
 import { FieldNumberOutlined, PictureOutlined, TrophyOutlined, CommentOutlined } from '@ant-design/icons-vue';
@@ -93,7 +93,7 @@ const data = ref([]);
 // 在组件挂载后调用接口
 onMounted(async () => {
     try {
-        const response = await axios.post('/api/student/getStuQuestionScore', {
+        const response = await http.post('/student/getStuQuestionScore', {
             "username": webStore.info.userName,
             "token": webStore.info.token,
             "paperId": route.params.paperId
@@ -104,7 +104,7 @@ onMounted(async () => {
         data.value = responseData.questionScore.map(item => {
             return {
                 questionId: item.question,
-                image_paths: `/api${responseData.image_paths[item.question]}`, // 根据 question 获取对应的图片路径
+                image_paths: `${responseData.image_paths[item.question]}`, // 根据 question 获取对应的图片路径
                 score: item.score,
                 parse: item.parse
             };

@@ -6,7 +6,11 @@
 
 <script setup>
 // import { useWebStore } from '@/stores/web.js';
-// import { onMounted } from 'vue';
+import { onMounted } from 'vue';
+
+onMounted(()=>{
+  console.log(111);
+})
 // import { useRouter,useRoute } from 'vue-router';
 
 // const route = useRouter()

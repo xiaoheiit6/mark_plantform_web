@@ -38,7 +38,7 @@
 
 <script setup>
 import { ref, onMounted } from 'vue';
-import axios from 'axios';
+import {http} from '@/lib/Http.js';
 import { useRoute } from 'vue-router';
 import { message } from 'ant-design-vue';
 import { useWebStore } from '@/stores/web.js';
@@ -89,7 +89,7 @@ const columns = [
 onMounted(async () => {
     try {
         // 示例API请求，请替换为实际的API URL
-        const response = await axios.post('/api/teacher/getStuQuestionScore', {
+        const response = await http.post('/teacher/getStuQuestionScore', {
             username: webStore.info.userName,
             token: webStore.info.token,
             stuUsername: route.params.username,
@@ -100,7 +100,7 @@ onMounted(async () => {
 
         const processedData = Object.keys(responseData.image_paths).map((key, index) => ({
             questionId: index ,
-            image_paths: [`/api/${responseData.image_paths[key]}`],
+            image_paths: [`/${responseData.image_paths[key]}`],
             score: responseData.questionScore.find(q => q.question === index )?.score || '',
             parse: responseData.questionScore.find(q => q.question === index )?.parse || '',
         }));
@@ -133,7 +133,7 @@ const handleModifyConfirm = () => {
 
     confirmLoading.value = true;
 
-    axios.post('/api/teacher/setStuQuestionScore', requestData)
+    http.post('/teacher/setStuQuestionScore', requestData)
         .then(response => {
             if (response.data.code === 200) {
                 // 处理响应

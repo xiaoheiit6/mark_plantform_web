@@ -47,7 +47,7 @@ import { reactive, ref } from 'vue';
 import { MinusCircleOutlined, PlusOutlined } from '@ant-design/icons-vue';
 import { useWebStore } from '@/stores/web.js';
 import { message } from 'ant-design-vue';
-import axios from 'axios';
+import {http} from '@/lib/Http.js';
 import { useRouter } from 'vue-router';
 
 const route = useRouter();
@@ -87,7 +87,7 @@ const addQuestion = () => {
 
 const onFinish = values => {
   open.value = true;
-  axios.post("/api/teacher/creatPaper", dynamicValidateForm)
+  http.post("/teacher/creatPaper", dynamicValidateForm)
     .then(response => {
       if (response.data.code === 200) {
         console.log("success");

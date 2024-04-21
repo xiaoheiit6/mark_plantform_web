@@ -13,7 +13,7 @@ import { GridComponent, TitleComponent, TooltipComponent, LegendComponent } from
 import { CanvasRenderer } from 'echarts/renderers'
 import VChart, { THEME_KEY } from "vue-echarts";
 import { useWebStore } from '@/stores/web.js';
-import axios from 'axios'
+import {http} from '@/lib/Http.js';
 const webStore = useWebStore()
 use([GridComponent, LineChart, CanvasRenderer, TitleComponent, TooltipComponent, LegendComponent, PieChart])
 
@@ -23,8 +23,10 @@ const data2 = ref([]);
 const pieData = ref([]);
 
 onMounted(() => {
+    console.log('test1');
     getData();
-    getPieData(); 
+    getPieData();
+    console.log('test2');
 })
 
 const getData = () => {
@@ -32,7 +34,7 @@ const getData = () => {
         username: webStore.info.userName,
         token: webStore.info.token
     })
-    axios.post("/api/student/getStuGrades", info)
+    http.post("/student/getStuGrades", info)
         .then(response => {
             const grades = response.data.grade;
             const formattedGrades = [];
@@ -65,7 +67,7 @@ const getData = () => {
 }
 
 const getPieData = () => {
-    axios.post("/api/student/getLastPaper", {
+    http.post("/student/getLastPaper", {
         username: webStore.info.userName  // Change as necessary based on your authentication scheme
     }).then(response => {
         const questionScores = response.data.questionScore.map(item => ({

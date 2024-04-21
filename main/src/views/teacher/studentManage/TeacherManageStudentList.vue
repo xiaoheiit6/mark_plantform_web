@@ -47,7 +47,7 @@
 
 <script setup>
 import { ref, onMounted, reactive, computed } from 'vue';
-import axios from 'axios';
+import {http} from '@/lib/Http.js';
 import { useWebStore } from '@/stores/web.js';
 import { message } from 'ant-design-vue';
 import { use } from 'echarts/core'
@@ -129,7 +129,7 @@ const option = computed(() => {
 })
 onMounted(async () => {
     try {
-        const response = await axios.post('/api/teacher/getStuList', {
+        const response = await http.post('/teacher/getStuList', {
             username: webStore.info.userName,
             token: webStore.info.token,
         });
@@ -158,7 +158,7 @@ const handleSendEmailConfirm = () => {
 
     confirmLoading.value = true; // 开始加载动画
 
-    axios.post('/api/teacher/sendEmail', requestData)
+    http.post('/teacher/sendEmail', requestData)
         .then(response => {
             // 处理响应
             message.success("邮件发送成功!");
@@ -218,7 +218,7 @@ const confirmReSetStuPassword = (record) => {
         newPassword: '123456'
     })
 
-    axios.post('/api/teacher/setStuPassword', reInfo)
+    http.post('/teacher/setStuPassword', reInfo)
         .then(response => {
             message.success("已经将学生的密码重置为123456 !");
             console.log(response)

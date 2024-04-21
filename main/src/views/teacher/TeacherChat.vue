@@ -19,7 +19,7 @@
   
   <script setup>
   import { ref } from 'vue';
-  import axios from 'axios';
+  import {http} from '@/lib/Http.js';
   import MarkdownIt from 'markdown-it';
   
   const md = new MarkdownIt();
@@ -49,7 +49,7 @@
     if (!inputValue.value.trim()) return;
     loading.value = true;
     try {
-      const response = await axios.post('/api/teacher/eb_stream', {
+      const response = await http.post('/teacher/eb_stream', {
         prompt: inputValue.value
       });
       if (response.data && response.data.result) {

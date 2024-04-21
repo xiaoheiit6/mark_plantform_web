@@ -35,7 +35,7 @@
                                 </a-menu-item>
                             </a-menu>
                         </template>
-                        <a-avatar :size="small" src="/api/static/avatar/student.png">
+                        <a-avatar :size="small" src="/static/avatar/student.png">
                             <template #icon>
                                 <UserOutlined />
                             </template>
@@ -56,7 +56,7 @@
                 </div>
             </a-layout-content>
             <a-layout-footer style="text-align: center">
-                这次一定队 ©2024 第十五届服创大赛
+                递归写不队 ©2024 中国大学生计算机设计大赛
             </a-layout-footer>
         </a-layout>
     </a-layout>
@@ -67,7 +67,7 @@ import { useWebStore } from '@/stores/web.js';
 import { useRouter,useRoute } from 'vue-router';
 import { reactive, ref, computed } from 'vue';
 import { PieChartOutlined, UserOutlined, LogoutOutlined, CommentOutlined, FileOutlined } from '@ant-design/icons-vue';
-import axios from 'axios';
+import {http} from '@/lib/Http.js'
 import { message } from 'ant-design-vue';
 
 const router = useRoute()
@@ -96,7 +96,7 @@ const logout = () => {
         username: webStore.info.userName,
         token: webStore.info.token
     })
-    axios.post("/api/auth/stuLogout", logoutData)
+    http.post("/auth/stuLogout", logoutData)
         .then(response => {
             const code = response.data.code
             if (code === 200) {
@@ -141,7 +141,7 @@ const logout = () => {
     /* 根据需要调整高度 */
     width: 80px;
     /* 宽度和高度保持一致以形成完美的圆形 */
-    background-image: url('/api/static/avatar/student.png');
+    background-image: url('/static/avatar/student.png');
     background-size: cover;
     /* 或者使用 contain 根据您的需要 */
     background-position: center;

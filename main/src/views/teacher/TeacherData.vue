@@ -12,7 +12,7 @@ import { LineChart, PieChart } from 'echarts/charts'
 import { GridComponent, TitleComponent, TooltipComponent, LegendComponent } from 'echarts/components'
 import { CanvasRenderer } from 'echarts/renderers'
 import VChart, { THEME_KEY } from "vue-echarts";
-import axios from 'axios';
+import {http} from '@/lib/Http.js';
 import { useWebStore } from '@/stores/web.js';
 
 const webStore = useWebStore()
@@ -32,7 +32,7 @@ onMounted(() => {
 // 请求数据函数
 const fetchChartData = async () => {
     try {
-        const response = await axios.post("/api/teacher/paperAverage", {
+        const response = await http.post("/teacher/paperAverage", {
             username: webStore.info.userName,
             token: webStore.info.token
         });

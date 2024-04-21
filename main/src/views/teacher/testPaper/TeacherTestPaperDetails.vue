@@ -60,7 +60,7 @@
 
 <script setup>
 import { ref, onMounted } from 'vue';
-import axios from 'axios'; // 确保你已经安装并导入了axios
+import {http} from '@/lib/Http.js';
 import { useRoute, useRouter } from 'vue-router';
 import { useWebStore } from '@/stores/web.js';
 import { FieldStringOutlined, FieldNumberOutlined, PictureOutlined, BarChartOutlined, ToolOutlined } from '@ant-design/icons-vue';
@@ -111,7 +111,7 @@ const data = ref([]);
 // 在组件挂载后调用接口
 onMounted(async () => {
     try {
-        const response = await axios.post('/api/teacher/getAllStu', {
+        const response = await http.post('/teacher/getAllStu', {
             "username": webStore.info.userName,
             "token": webStore.info.token,
             "paperId": route.params.paperId
@@ -121,7 +121,7 @@ onMounted(async () => {
             key: item.id.toString(), // 将id转换为字符串，确保key是唯一的
             name: item.name, // 使用student作为姓名，因为name字段为null
             username: item.student,
-            image_paths: `/api${item.image_paths}`,
+            image_paths: `${item.image_paths}`,
             score: item.score,
         }));
     } catch (error) {

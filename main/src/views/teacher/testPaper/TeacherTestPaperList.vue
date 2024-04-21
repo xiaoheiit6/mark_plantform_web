@@ -73,7 +73,7 @@
 <script setup>
 import { ref, reactive, onMounted, computed } from 'vue';
 import { message } from 'ant-design-vue';
-import axios from 'axios';
+import {http} from '@/lib/Http.js';
 import { FileOutlined, FieldNumberOutlined, TagOutlined,ToolOutlined } from '@ant-design/icons-vue';
 import { useWebStore } from '@/stores/web.js';
 import { useRouter } from 'vue-router';
@@ -131,7 +131,7 @@ const viewDetails = (record) => {
 // 从后端获取试卷数据
 const fetchPapers = async () => {
     try {
-        const response = await axios.post('/api/teacher/getAllPaper', {
+        const response = await http.post('/teacher/getAllPaper', {
             username: webStore.info.userName,
             token: webStore.info.token
         });
@@ -152,7 +152,7 @@ const exportGrade = (record) => {
         paperId: record.paperId.toString()
     });
 
-    axios.post('/api/teacher/exportGrade', exportInfo, { responseType: 'blob' })
+    http.post('/teacher/exportGrade', exportInfo, { responseType: 'blob' })
     .then(response => {
         const url = window.URL.createObjectURL(new Blob([response.data]));
         const link = document.createElement('a');
@@ -185,7 +185,7 @@ onMounted(fetchPapers);
 const showGarde = (record) => {
     selectedKey.value = record.key;
 
-    axios.post('/api/teacher/average',{
+    http.post('/teacher/average',{
         username: webStore.info.userName,
         token: webStore.info.token,
         paperId: selectedKey.value
@@ -233,7 +233,7 @@ const handleCancelGarde = () => {
 const deletePaper = async (paperId) => {
     try {
         // 发送删除请求
-        const response = await axios.post('/api/teacher/deletePaper', {
+        const response = await http.post('/teacher/deletePaper', {
             username: webStore.info.userName,
             token: webStore.info.token,
             paperId: paperId

@@ -62,7 +62,7 @@
                                 </a-menu-item>
                             </a-menu>
                         </template>
-                        <a-avatar src="/api/static/avatar/teacher.png">
+                        <a-avatar src="/static/avatar/teacher.png">
                             <template #icon>
                                 <UserOutlined />
                             </template>
@@ -83,7 +83,7 @@
                 </div>
             </a-layout-content>
             <a-layout-footer style="text-align: center">
-                这次一定队 ©2024 第十五届服创大赛
+                递归写不队 ©2024 中国大学生计算机设计大赛
             </a-layout-footer>
         </a-layout>
     </a-layout>
@@ -93,7 +93,7 @@
 import { reactive, ref, computed } from 'vue';
 import { PieChartOutlined, TeamOutlined, FileAddOutlined, UserOutlined, FileOutlined, LogoutOutlined, FileSyncOutlined, UsergroupAddOutlined, CommentOutlined } from '@ant-design/icons-vue';
 import { useWebStore } from '@/stores/web.js';
-import axios from 'axios';
+import {http} from '@/lib/Http.js';
 import { message } from 'ant-design-vue';
 import { useRouter,useRoute } from 'vue-router';
 const route = useRouter()
@@ -117,7 +117,7 @@ const logout = () => {
         username: webStore.info.userName,
         token: webStore.info.token
     })
-    axios.post("/api/auth/teacherLogout", logoutData)
+    http.post("/auth/teacherLogout", logoutData)
         .then(response => {
             const code = response.data.code
             if (code === 200) {
@@ -162,7 +162,7 @@ const boxStyle = {
 .logo {
     height: 80px; /* 根据需要调整高度 */
     width: 80px; /* 宽度和高度保持一致以形成完美的圆形 */
-    background-image: url('/api/static/avatar/teacher.png');
+    background-image: url('/static/avatar/teacher.png');
     background-size: cover; /* 或者使用 contain 根据您的需要 */
     background-position: center;
     background-repeat: no-repeat;
