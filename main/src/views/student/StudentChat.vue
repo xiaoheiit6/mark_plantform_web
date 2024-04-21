@@ -1,29 +1,10 @@
-<template>
-  
-  <a-card title="智能问答助手">
-    <div v-if="loading" style="height:300px; display: flex; justify-content: center; align-items: center;">
-      <a-spin tip="AI思考中..."></a-spin>
-    </div>
-    <div v-else style="height: 300px; overflow-y: auto; margin-top: 10px;">
-      <div class="message-background" v-html="lastMessage"></div> <!-- 使用 v-html 渲染 HTML -->
-    </div>
-    <a-input-group compact>
-      <a-input v-model:value="inputValue" placeholder="请输入你的问题" style="width: calc(100% - 100px)" />
-      <a-button type="primary" @click="submitRequest">提交</a-button>
-    </a-input-group>
-  </a-card>
-
-</template>
-
-
-
 <script setup>
-import { ref } from 'vue';
-import {http} from '@/lib/Http.js';
-import MarkdownIt from 'markdown-it';
+import { ref } from 'vue'
+import MarkdownIt from 'markdown-it'
+import { http } from '@/lib/Http.js'
 
-const md = new MarkdownIt();
-const inputValue = ref('');
+const md = new MarkdownIt()
+const inputValue = ref('')
 const lastMessage = ref(md.render(`
 ## 欢迎使用**智能问答助手**
 
@@ -40,29 +21,45 @@ const lastMessage = ref(md.render(`
 
 只需在下方输入您的问题，智能问答助手将为您提供详尽的解答。
 
-`));
-const loading = ref(false);
+`))
+const loading = ref(false)
 
-const submitRequest = async () => {
-  if (!inputValue.value.trim()) return;
-  loading.value = true;
+async function submitRequest() {
+  if (!inputValue.value.trim())
+    return
+  loading.value = true
   try {
     const response = await http.post('/student/eb_stream', {
-      prompt: inputValue.value
-    });
+      prompt: inputValue.value,
+    })
     if (response.data && response.data.result) {
-      lastMessage.value = md.render(response.data.result); // 解析 Markdown 到 HTML
+      lastMessage.value = md.render(response.data.result) // 解析 Markdown 到 HTML
     }
   } catch (error) {
-    console.error('Request failed:', error);
-    lastMessage.value = '请求失败';
+    console.error('Request failed:', error)
+    lastMessage.value = '请求失败'
   }
-  inputValue.value = '';
-  loading.value = false;
-};
+  inputValue.value = ''
+  loading.value = false
+}
 </script>
 
-
+<template>
+  <a-card title="智能问答助手">
+    <div v-if="loading" style="height:300px; display: flex; justify-content: center; align-items: center;">
+      <a-spin tip="AI思考中..." />
+    </div>
+    <div v-else style="height: 300px; overflow-y: auto; margin-top: 10px;">
+      <div class="message-background" v-html="lastMessage" /> <!-- 使用 v-html 渲染 HTML -->
+    </div>
+    <a-input-group compact>
+      <a-input v-model:value="inputValue" placeholder="请输入你的问题" style="width: calc(100% - 100px)" />
+      <a-button type="primary" @click="submitRequest">
+        提交
+      </a-button>
+    </a-input-group>
+  </a-card>
+</template>
 
 <style scoped>
 .message-background {
@@ -70,6 +67,4 @@ const submitRequest = async () => {
   padding: 10px;
   border-radius: 5px; /* 轻微的圆角效果 */
 }
-
-
 </style>

@@ -1,10 +1,62 @@
+<script setup>
+import { message } from 'ant-design-vue'
+import { useRouter } from 'vue-router'
+import { computed, reactive, ref } from 'vue'
+import { http } from '@/lib/Http.js'
+
+const router = useRouter()
+const justify = ref('center')
+const alignItems = ref('center')
+const formState = reactive({
+  username: '',
+  password: '',
+  email: '',
+  stuNo: '',
+  name: '',
+})
+
+function onFinish(values) {
+  console.log('Success:', values)
+}
+function onFinishFailed(errorInfo) {
+  console.log('Failed:', errorInfo)
+}
+const disabled = computed(() => {
+  return !(formState.username && formState.password)
+})
+const boxStyle = {
+  width: '100%',
+  height: '400px',
+  borderRadius: '6px',
+
+}
+
+// 请求
+function login() {
+  http.post('/auth/stuRegister', formState)
+    .then((response) => {
+      if (response.data.code === 200) {
+        message.success('注册成功！请登录!')
+        router.push('/login')
+      }
+    })
+    .catch((error) => {
+      console.error('error!', error)
+    })
+}
+</script>
+
 <template>
   <a-flex gap="middle" align="start" vertical class="container-center">
     <a-flex :style="{ ...boxStyle }" :justify="justify" :align="alignItems">
       <div class="loginbox">
-        <a-form :model="formState" name="normal_login" class="login-form" @finish="onFinish"
-          @finishFailed="onFinishFailed">
-          <h1 class="title-center">注册</h1>
+        <a-form
+          :model="formState" name="normal_login" class="login-form" @finish="onFinish"
+          @finish-failed="onFinishFailed"
+        >
+          <h1 class="title-center">
+            注册
+          </h1>
           <a-form-item label="账号" name="username" :rules="[{ required: true, message: '请输入你的账号!' }]">
             <a-input v-model:value="formState.username">
               <template #prefix>
@@ -19,7 +71,6 @@
                 <LockOutlined class="site-form-item-icon" />
               </template>
             </a-input-password>
-
           </a-form-item>
           <a-form-item label="邮箱" name="email" :rules="[{ required: true, message: '请输入你的邮箱!' }]">
             <a-input v-model:value="formState.email">
@@ -44,7 +95,6 @@
             </a-input>
           </a-form-item>
 
-
           <a-form-item class="center">
             <a-button :disabled="disabled" type="primary" html-type="submit" class="login-form-button" @click="login">
               立即注册
@@ -59,60 +109,7 @@
       </div>
     </a-flex>
   </a-flex>
-
 </template>
-
-<script setup>
-import {http} from '@/lib/Http.js';
-import { message } from 'ant-design-vue';
-import { useWebStore } from '@/stores/web.js';
-import { useRouter } from 'vue-router';
-import { reactive, computed, ref } from 'vue';
-
-const webStore = useWebStore();
-const router = useRouter();
-const justify = ref('center');
-const alignItems = ref('center');
-const formState = reactive({
-  username: '',
-  password: '',
-  email:'',
-  stuNo:'',
-  name:''
-});
-
-const onFinish = values => {
-  console.log('Success:', values);
-};
-const onFinishFailed = errorInfo => {
-  console.log('Failed:', errorInfo);
-};
-const disabled = computed(() => {
-  return !(formState.username && formState.password);
-});
-const boxStyle = {
-  width: '100%',
-  height: '400px',
-  borderRadius: '6px',
-
-};
-
-//请求
-const login = () => {
-  http.post('/auth/stuRegister', formState)
-    .then(response => {
-      if(response.data.code === 200){
-        message.success("注册成功！请登录!")
-        router.push("/login")
-      }
-    })
-    .catch(error => {
-      console.error('error!', error)
-    })
-
-}
-
-</script>
 
 <style scoped>
 .title-center {
@@ -174,8 +171,6 @@ const login = () => {
   display: flex;
   justify-content: center;
 }
-
-
 
 /* form表单里div的下边距 */
 .ant-form-item {

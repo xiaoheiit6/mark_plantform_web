@@ -1,11 +1,120 @@
-<template>
+<script setup>
+import { message } from 'ant-design-vue'
+import { computed, onMounted, reactive, ref } from 'vue'
+import { useRouter } from 'vue-router'
+import { useWebStore } from '@/stores/web.js'
 
+import { http } from '@/lib/Http.js'
+
+onMounted(() => {
+  console.log(222)
+})
+const webStore = useWebStore()
+const route = useRouter()
+const value = ref('1')
+const justify = ref('center')
+const alignItems = ref('center')
+const formState = reactive({
+  username: '',
+  password: '',
+})
+
+// 请求
+async function login() {
+  try {
+    if (value.value === '1') {
+      http.post('/auth/stuLogin', formState)
+        .then((response) => {
+          const code = response.data.code
+          if (code === 200) {
+            message.success({
+              content: '登录成功',
+              duration: 1,
+            })
+            const { token, username, name } = response.data.data
+
+            webStore.info.id = 0
+            webStore.info.userName = username
+            webStore.info.realName = name
+            webStore.info.token = token
+            webStore.info.isLogin = true
+            console.log(webStore.info)
+
+            route.push('/student')
+          }
+        })
+        .catch((error) => {
+          console.log('error', error)
+          message.error({
+            content: '登录失败,请检查账号密码是否正确!',
+            duration: 1,
+          })
+        })
+    } else {
+      http.post('/auth/teacherLogin', formState)
+        .then((response) => {
+          const code = response.data.code
+          if (code === 200) {
+            message.success({
+              content: '登录成功',
+              duration: 1,
+            })
+            const { token, username, name } = response.data.data
+
+            webStore.info.id = 1
+            webStore.info.userName = username
+            webStore.info.realName = name
+            webStore.info.token = token
+            webStore.info.isLogin = true
+
+            console.log(webStore.info)
+            route.push('/teacher')
+          }
+        })
+        .catch((error) => {
+          console.log('error', error)
+          message.error({
+            content: '登录失败,请检查账号密码是否正确!',
+            duration: 1,
+          })
+        })
+    }
+  } catch (error) {
+    message.error({
+      content: '服务器错误!',
+      duration: 1,
+    })
+  }
+}
+
+function onFinish(values) {
+  console.log('Success:', values)
+}
+function onFinishFailed(errorInfo) {
+  console.log('Failed:', errorInfo)
+}
+const disabled = computed(() => {
+  return !(formState.username && formState.password)
+})
+const boxStyle = {
+  width: '100%',
+  height: '400px',
+  borderRadius: '6px',
+
+}
+</script>
+
+<template>
   <a-flex gap="middle" align="start" vertical class="container-center">
     <a-flex :style="{ ...boxStyle }" :justify="justify" :align="alignItems">
       <div class="loginbox">
-        <a-form :model="formState" name="normal_login" class="login-form" @finish="onFinish"
-          @finishFailed="onFinishFailed">
-          <h1 class="title-center">文心智评</h1>
+        <a-form
+          :model="formState" name="normal_login" class="login-form" @finish="onFinish"
+          @finish-failed="onFinishFailed"
+        >
+          <h1 class="title-center">
+            文心智评
+          </h1>
           <a-form-item label="账号" name="username" :rules="[{ required: true, message: '请输入你的用户名!' }]">
             <a-input v-model:value="formState.username">
               <template #prefix>
@@ -22,133 +131,26 @@
             </a-input-password>
           </a-form-item>
 
-
           <a-radio-group v-model:value="value" name="radioGroup" class="space-around">
-            <a-radio value="1">学生</a-radio>
-            <a-radio value="2">老师</a-radio>
+            <a-radio value="1">
+              学生
+            </a-radio>
+            <a-radio value="2">
+              老师
+            </a-radio>
           </a-radio-group>
           <a-form-item class="center">
-            <a-button :disabled="disabled" type="primary" html-type="submit" class="login-form-button" @click="login" >
+            <a-button :disabled="disabled" type="primary" html-type="submit" class="login-form-button" @click="login">
               登录
             </a-button>
             或者
             <a href="/register">现在注册!</a>
           </a-form-item>
-          
         </a-form>
       </div>
     </a-flex>
   </a-flex>
-
 </template>
-
-<script setup>
-import {http} from '@/lib/Http.js';
-import { message } from 'ant-design-vue';
-import { useWebStore } from '@/stores/web.js';
-import { reactive, computed, ref } from 'vue';
-import { useRouter } from 'vue-router';
-import { onMounted } from 'vue';
-
-onMounted(()=>{
-  console.log(222);
-})
-const webStore = useWebStore();
-const route = useRouter();
-const value = ref('1');
-const justify = ref('center');
-const alignItems = ref('center');
-const formState = reactive({
-  username: '',
-  password: '',
-});
-
-//请求
-const login = async () => {
-  try {
-    if (value.value === "1") {
-      http.post('/auth/stuLogin', formState)
-        .then(response => {
-          const code = response.data.code;
-          if (code === 200) {
-            message.success({
-              content: '登录成功',
-              duration: 1
-            });
-            const { token, username, name } = response.data.data;
-
-            webStore.info.id = 0;
-            webStore.info.userName = username
-            webStore.info.realName = name
-            webStore.info.token = token
-            webStore.info.isLogin = true
-            console.log(webStore.info)
-
-            route.push("/student")
-          }
-        })
-        .catch(error => {
-          console.log("error", error)
-          message.error({
-            content: '登录失败,请检查账号密码是否正确!',
-            duration: 1
-          });
-        })
-    } else {
-      http.post('/auth/teacherLogin', formState)
-        .then(response => {
-          const code = response.data.code;
-          if (code === 200) {
-            message.success({
-              content: '登录成功',
-              duration: 1
-            });
-            const { token, username, name } = response.data.data;
-
-            webStore.info.id = 1;
-            webStore.info.userName = username
-            webStore.info.realName = name
-            webStore.info.token = token
-            webStore.info.isLogin = true
-
-            console.log(webStore.info)
-            route.push("/teacher")
-          }
-        })
-        .catch(error => {
-          console.log("error", error)
-          message.error({
-            content: '登录失败,请检查账号密码是否正确!',
-            duration: 1
-          });
-        })
-    }
-  } catch (error) {
-    message.error({
-      content: '服务器错误!',
-      duration: 1
-    })
-  }
-}
-
-
-const onFinish = values => {
-  console.log('Success:', values);
-};
-const onFinishFailed = errorInfo => {
-  console.log('Failed:', errorInfo);
-};
-const disabled = computed(() => {
-  return !(formState.username && formState.password);
-});
-const boxStyle = {
-  width: '100%',
-  height: '400px',
-  borderRadius: '6px',
-
-};
-</script>
-
 
 <style scoped>
 .title-center {
@@ -210,8 +212,6 @@ const boxStyle = {
   display: flex;
   justify-content: center;
 }
-
-
 
 /* form表单里div的下边距 */
 .ant-form-item {

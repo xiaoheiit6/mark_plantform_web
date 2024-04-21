@@ -13,6 +13,7 @@ export default antfu(
             'curly': 'off',
             'style/brace-style': 'off',
             'max-statements-per-line': 'off',
+            'no-console': 'warn'
         },
     })
 )

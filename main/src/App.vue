@@ -1,15 +1,9 @@
-<template>
-
-  <router-view />
-  
-</template>
-
 <script setup>
 // import { useWebStore } from '@/stores/web.js';
-import { onMounted } from 'vue';
+import { onMounted } from 'vue'
 
-onMounted(()=>{
-  console.log(111);
+onMounted(() => {
+  console.log(111)
 })
 // import { useRouter,useRoute } from 'vue-router';
 
@@ -30,10 +24,13 @@ onMounted(()=>{
 //       console.log(router.path)
 //       route.push("/login")
 //     }
-    
+
 //   }
 // })
-
 </script>
+
+<template>
+  <router-view />
+</template>
 
 <style lang="scss" scoped></style>
