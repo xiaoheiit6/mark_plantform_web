@@ -117,7 +117,7 @@ const boxStyle = {
                 </a-menu-item>
               </a-menu>
             </template>
-            <a-avatar src="/static/avatar/teacher.png">
+            <a-avatar src="/api/static/avatar/teacher.png">
               <template #icon>
                 <UserOutlined />
               </template>
@@ -163,7 +163,7 @@ const boxStyle = {
 .logo {
     height: 80px; /* 根据需要调整高度 */
     width: 80px; /* 宽度和高度保持一致以形成完美的圆形 */
-    background-image: url('/static/avatar/teacher.png');
+    background-image: url('/api/static/avatar/teacher.png');
     background-size: cover; /* 或者使用 contain 根据您的需要 */
     background-position: center;
     background-repeat: no-repeat;

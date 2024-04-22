@@ -8,7 +8,7 @@ const routes = [
   {
     path: '/',
     component: App,
-    // meta: { requiresAuth: true },
+    meta: { requiresAuth: true },
   },
   {
     path: '/login',
@@ -105,6 +105,18 @@ const router = createRouter({
 router.beforeEach((to, from, next) => {
   // 设置每个页面的title
   document.title = to.meta.title || '文心智评'
+
+  if (to.path === '/') {
+    if (!isLoggedIn()) {
+      return next('/login')
+    } else if (isLoggedIn()) {
+      if (useWebStore().info.id === 0) {
+        return next('/student/data')
+      } else if (useWebStore().info.id === 1) {
+        return next('/teacher/data')
+      }
+    }
+  }
 
   if (to.path === '/student') {
     return next('/student/data') // 使用return确保不会继续执行后面的代码

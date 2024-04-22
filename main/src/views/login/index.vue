@@ -1,14 +1,12 @@
 <script setup>
 import { message } from 'ant-design-vue'
-import { computed, onMounted, reactive, ref } from 'vue'
+import { computed, reactive, ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { useWebStore } from '@/stores/web.js'
 
 import { http } from '@/lib/Http.js'
 
-onMounted(() => {
-  console.log(222)
-})
+
 const webStore = useWebStore()
 const route = useRouter()
 const value = ref('1')

@@ -60,7 +60,7 @@ onMounted(async () => {
 
     const processedData = Object.keys(responseData.image_paths).map((key, index) => ({
       questionId: index,
-      image_paths: [`/${responseData.image_paths[key]}`],
+      image_paths: [`${responseData.image_paths[key]}`],
       score: responseData.questionScore.find(q => q.question === index)?.score || '',
       parse: responseData.questionScore.find(q => q.question === index)?.parse || '',
     }))

@@ -87,7 +87,7 @@ function logout() {
                 </a-menu-item>
               </a-menu>
             </template>
-            <a-avatar :size="small" src="/static/avatar/student.png">
+            <a-avatar :size="small" src="/api/static/avatar/student.png">
               <template #icon>
                 <UserOutlined />
               </template>
@@ -135,7 +135,7 @@ function logout() {
     /* 根据需要调整高度 */
     width: 80px;
     /* 宽度和高度保持一致以形成完美的圆形 */
-    background-image: url('/static/avatar/student.png');
+    background-image: url('/api/static/avatar/student.png');
     background-size: cover;
     /* 或者使用 contain 根据您的需要 */
     background-position: center;
